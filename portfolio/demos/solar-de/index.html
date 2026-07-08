@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="de" id="top">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SonnenWerk — Lohnt sich Solar auf Ihrem Dach?</title>
+<meta name="description" content="Demo einer deutschen Photovoltaik-Seite mit ehrlicher Eignungsprüfung: Dach, Verbrauch, Speicher — und einem Assistenten, der den Vertrieb vorbereitet statt Preise zu erfinden." />
+<meta name="robots" content="noindex" />
+<meta property="og:title" content="SonnenWerk — Photovoltaik Demo" />
+<meta property="og:description" content="Finden Sie heraus, ob sich Solar auf Ihrem Dach lohnt. Portfolio-Demo von Andrey Volkov." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="og.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="og.jpg" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23123A2C'/%3E%3Ccircle cx='16' cy='13' r='5' fill='none' stroke='%23E8A32C' stroke-width='2'/%3E%3Cpath d='M16 5v2M16 19v2M8 13h2M22 13h2M10 7l1.4 1.4M22 7l-1.4 1.4' stroke='%23E8A32C' stroke-width='2' stroke-linecap='round'/%3E%3Crect x='7' y='23' width='18' height='4' rx='1' fill='%23DCEBF2'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#FBFAF7; --surface:#FFFFFF; --ink:#123A2C; --muted:#5A6B60;
+  --line:#E4E7DE; --forest:#146B47; --amber:#E8A32C; --amber-soft:#FCEBC8; --sky:#DCEBF2;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:2px solid var(--forest);outline-offset:3px;border-radius:4px}
+::selection{background:var(--amber-soft);color:var(--ink)}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:10px 14px;z-index:100}
+.skip:focus{left:0}
+.wrap{width:min(1120px,calc(100% - 40px));margin:0 auto}
+.display{font-family:Archivo,Arial,sans-serif;font-weight:800;letter-spacing:-.02em}
+.mono{font-family:"IBM Plex Mono",Consolas,monospace}
+.eyebrow{font-family:"IBM Plex Mono",Consolas,monospace;text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:var(--forest);font-weight:500}
+h1{font-family:Archivo,Arial,sans-serif;font-weight:800;font-size:clamp(42px,6.6vw,84px);line-height:.98;letter-spacing:-.028em;margin:16px 0 22px;text-wrap:balance}
+h1 .sun-word{color:var(--amber)}
+h2{font-family:Archivo,Arial,sans-serif;font-weight:700;font-size:clamp(27px,3.6vw,44px);line-height:1.06;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+h3{font-size:19px;margin:0 0 8px;font-family:Archivo,sans-serif;font-weight:700}
+p{color:var(--muted);margin:0 0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:13px 24px;border-radius:9px;border:1px solid var(--ink);background:var(--ink);color:#fff;font-weight:600;font-size:15px;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -18px rgba(18,58,44,.6)}
+.btn.amber{background:var(--amber);border-color:var(--amber);color:#3A2703}
+.btn.amber:hover{box-shadow:0 16px 30px -16px rgba(232,163,44,.7)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink);box-shadow:none}
+.btn.light{background:#fff;border-color:#fff;color:var(--ink)}
+
+/* ── Reveal on scroll ── */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.1s}.reveal[data-d="2"]{transition-delay:.2s}.reveal[data-d="3"]{transition-delay:.3s}
+
+/* ── Nav ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;transition:background .4s,border-color .4s,backdrop-filter .4s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(251,250,247,.88);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+.nav .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-weight:800;font-size:19px;letter-spacing:-.01em}
+.brand .dot{width:32px;height:32px;border-radius:9px;background:var(--forest);display:grid;place-items:center}
+.nav-links{display:flex;align-items:center;gap:26px;font-size:14.5px;color:var(--muted)}
+.nav-links a{transition:color .25s}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.back{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.back:hover{color:var(--ink)}
+
+/* ── Hero ── */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding:150px 0 0;overflow:hidden;
+  background:linear-gradient(180deg,#F3F7FA 0%,#FBFAF7 68%)}
+.hero-inner{position:relative;z-index:2}
+.hero h1{max-width:15ch}
+.hero .lead{font-size:19px;max-width:34em}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-proof{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px 28px;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;color:var(--muted)}
+.hero-proof b{color:var(--ink);font-weight:600}
+.hero-scene{position:relative;margin-top:26px;pointer-events:none}
+.hero-scene svg{display:block;width:100%;height:auto}
+.hero-badge{position:absolute;z-index:3;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;box-shadow:0 24px 50px -30px rgba(18,58,44,.5)}
+.hero-badge .k{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.hero-badge .v{font-family:Archivo,sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+.hero-badge .v small{font-size:13px;font-weight:600;color:var(--forest)}
+.badge-a{right:6%;top:-30px}
+.badge-b{left:4%;bottom:24%}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero-badge{animation:floaty 5.5s ease-in-out infinite}
+.badge-b{animation-delay:1.2s}
+@keyframes spinRays{to{transform:rotate(360deg)}}
+.sun-rays{transform-origin:center;animation:spinRays 60s linear infinite}
+
+/* ── Strip ── */
+.strip{border-block:1px solid var(--line);background:var(--surface)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.metric{padding:26px 18px;text-align:center;border-left:1px solid var(--line);min-width:0}
+.metric:first-child{border-left:0}
+.metric strong{display:block;font-family:Archivo,sans-serif;font-weight:800;font-size:25px;overflow-wrap:anywhere}
+.metric span{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+
+.section{padding:96px 0}
+.sec-head{max-width:36em;margin-bottom:42px}
+
+/* ── Steps ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;position:relative;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s,border-color .4s}
+.step:hover{transform:translateY(-6px);box-shadow:0 30px 50px -38px rgba(18,58,44,.5);border-color:#CFE0D3}
+.step:before{counter-increment:s;content:"0" counter(s);font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--amber);font-weight:500;letter-spacing:.08em}
+.step h3{margin-top:12px}
+.step p{margin:0}
+
+/* ── Gauge / Ersteinschätzung ── */
+.check{background:linear-gradient(180deg,#F3F7F1,#FBFAF7);border-block:1px solid var(--line)}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.gauge{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:18px;box-shadow:0 40px 80px -60px rgba(18,58,44,.45)}
+.gauge .k{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.gauge .big{font-family:Archivo,sans-serif;font-weight:800;font-size:32px;letter-spacing:-.02em;line-height:1;color:var(--forest)}
+.bar{height:12px;border-radius:999px;background:var(--line);overflow:hidden}
+.bar > i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--forest),var(--amber));transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+.gauge .hint{font-size:13px;color:var(--muted);margin:0}
+.gauge .row{display:flex;justify-content:space-between;gap:14px;font-size:14.5px;padding:10px 0;border-top:1px solid var(--line)}
+.gauge .row:first-of-type{border-top:0}
+.gauge .row b{font-weight:600}
+.gauge .row .ok{color:var(--forest);font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+
+/* ── Band ── */
+.band{background:var(--ink);color:#EAF3EE;border-radius:22px;position:relative;overflow:hidden}
+.band-sun{position:absolute;right:-70px;top:-70px;width:280px;height:280px;opacity:.12;pointer-events:none}
+.band .inner{position:relative;padding:64px 44px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.band h2{color:#fff}
+.band p{color:rgba(234,243,238,.72)}
+.band .eyebrow{color:var(--amber)}
+.band .facts{display:grid;gap:14px}
+.band .fact{display:flex;gap:14px;align-items:flex-start;font-size:15px;background:rgba(255,255,255,.05);border:1px solid rgba(228,231,222,.14);border-radius:12px;padding:15px 18px}
+.band .fact b{color:var(--amber);font-family:"IBM Plex Mono",monospace;font-size:13px;padding-top:2px;flex:none}
+
+/* ── Stimmen ── */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.quote{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:14px}
+.quote .stars{color:var(--amber);letter-spacing:3px;font-size:14px}
+.quote blockquote{margin:0;font-size:16.5px;line-height:1.55;color:var(--ink);font-weight:500}
+.quote cite{font-style:normal;font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:10px;margin-top:auto}
+.quote cite .dot{width:30px;height:30px;border-radius:9px;background:var(--amber-soft);display:grid;place-items:center;font-family:Archivo,sans-serif;font-weight:800;font-size:13px;color:#7A4E12}
+.quote .tag{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--forest)}
+
+/* ── FAQ ── */
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.qa{display:grid;gap:12px}
+.qa details{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .3s}
+.qa details[open]{border-color:#CFE0D3}
+.qa summary{padding:17px 20px;cursor:pointer;font-weight:600;font-size:15.5px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary:after{content:"+";font-family:Archivo,sans-serif;font-weight:700;font-size:20px;color:var(--forest);line-height:1;transition:transform .3s;flex:none}
+.qa details[open] summary:after{transform:rotate(45deg)}
+.qa .a{padding:0 20px 18px;color:var(--muted);font-size:15px}
+
+/* ── Beratung ── */
+.beratung .wrap{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+.form{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:0 40px 80px -60px rgba(18,58,44,.4)}
+.form label{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.field{width:100%;padding:13px 14px;border:1px solid var(--line);border-radius:9px;background:var(--paper);transition:border-color .3s}
+.field:focus{outline:none;border-color:var(--forest)}
+.note{font-size:13px;color:var(--muted);margin:0}
+.beratung-points{display:grid;gap:14px;margin-top:26px}
+.bp{display:flex;gap:12px;align-items:flex-start;font-size:15px;color:var(--muted)}
+.bp .tick{width:22px;height:22px;flex:none;border-radius:7px;background:var(--amber-soft);display:grid;place-items:center;margin-top:2px}
+
+/* ── Footer ── */
+.foot{border-top:1px solid var(--line);padding:44px 0;color:var(--muted);font-size:14px;background:var(--surface)}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center}
+
+/* ── Chat ── */
+#chatBtn{position:fixed;right:20px;bottom:20px;z-index:60;display:flex;align-items:center;gap:9px;height:54px;padding:0 20px 0 16px;border:0;border-radius:12px;background:var(--forest);color:#fff;font-weight:600;cursor:pointer;box-shadow:0 18px 40px -18px rgba(20,107,71,.7);transition:transform .3s}
+#chatBtn:hover{transform:translateY(-3px)}
+#chatBtn .av{width:26px;height:26px;border-radius:7px;background:var(--amber);color:#3A2703;display:grid;place-items:center;font-family:Archivo,sans-serif;font-weight:800;font-size:13px}
+#chat{position:fixed;right:20px;bottom:86px;z-index:61;width:min(384px,calc(100vw - 30px));max-height:min(600px,calc(100dvh - 120px));display:none;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 40px 90px -40px rgba(18,58,44,.55)}
+#chat.open{display:flex}
+.chat-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--ink);color:#fff}
+.chat-head .av{width:38px;height:38px;border-radius:9px;background:var(--amber);color:#3A2703;display:grid;place-items:center;font-family:Archivo,sans-serif;font-weight:800}
+.chat-head .t{font-weight:600;line-height:1.2}
+.chat-head .s{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#9FD3B7}
+.chat-head .x{margin-left:auto;width:36px;height:36px;border:0;background:transparent;color:rgba(255,255,255,.7);cursor:pointer;border-radius:8px}
+.chat-log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:86%;padding:11px 13px;border-radius:12px;font-size:14px;line-height:1.5;white-space:pre-line;animation:rise .3s ease}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.bot{align-self:flex-start;background:#F1F5EE;border:1px solid var(--line);border-bottom-left-radius:4px}
+.user{align-self:flex-end;background:var(--forest);color:#fff;border-bottom-right-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:11px;padding:8px 11px;border:1px solid var(--line);color:var(--forest);background:var(--surface);border-radius:8px;cursor:pointer}
+.chip:hover{background:#F1F5EE}
+.chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.chat-foot input{flex:1;border:1px solid var(--line);border-radius:8px;padding:11px 14px;background:var(--paper)}
+.chat-foot input:focus{outline:none;border-color:var(--forest)}
+.chat-foot button{width:44px;height:44px;flex:none;border:0;border-radius:9px;background:var(--forest);color:#fff;cursor:pointer}
+
+@media(max-width:900px){
+  .nav-links{display:none}
+  .steps,.quotes{grid-template-columns:1fr}
+  .check-grid,.band .inner,.beratung .wrap,.faq-grid{grid-template-columns:1fr;gap:32px}
+  .band .inner{padding:42px 26px}
+  .strip .wrap{grid-template-columns:1fr 1fr}
+  .metric:nth-child(3){border-left:0}
+  .nav .back{display:none}
+  .hero{padding-top:118px}
+  .hero-badge{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important}
+  .bar > i{transition:none}
+}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#beratung">Zum Beratungsformular springen</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E8A32C" stroke-width="2"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke-linecap="round"/></svg></span>SonnenWerk</a>
+    <nav class="nav-links" aria-label="Hauptnavigation">
+      <a href="#rechner">Eignung</a>
+      <a href="#check">Ersteinschätzung</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#stimmen">Stimmen</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <a class="back" href="../../brand-site/index.html">← Portfolio</a>
+      <a class="btn" href="#beratung">Solar-Check starten</a>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow reveal in">Photovoltaik-Beratung · Demo</p>
+      <h1 class="display reveal in" data-d="1">Lohnt sich <span class="sun-word">Solar</span> auf Ihrem Dach?</h1>
+      <p class="lead reveal in" data-d="2">Eine warme, sachliche Solar-Seite mit ehrlicher Eignungsprüfung — Dachart, Eigentum, Verbrauch und Speicherinteresse. Der Assistent sammelt strukturierte Daten und bereitet die Beratung vor, statt Preise zu erfinden.</p>
+      <div class="hero-actions reveal in" data-d="2">
+        <a class="btn amber" href="#beratung">Eignung prüfen</a>
+        <button class="btn ghost" type="button" data-open-chat>Solar-Assistent fragen</button>
+      </div>
+      <div class="hero-proof reveal in" data-d="3">
+        <span><b>1.200+</b> Dächer geprüft</span>
+        <span><b>60–80 %</b> Eigenverbrauch möglich</span>
+        <span><b>0 €</b> unverbindlicher Check</span>
+      </div>
+    </div>
+
+    <!-- Illustration: street with solar homes at golden hour -->
+    <div class="hero-scene reveal in" data-d="3" aria-hidden="true">
+      <div class="hero-badge badge-a"><div class="k">Ersteinschätzung</div><div class="v">gut geeignet <small>· Süd-Dach</small></div></div>
+      <div class="hero-badge badge-b"><div class="k">Eigenverbrauch heute</div><div class="v">74 % <small>mit Speicher</small></div></div>
+      <svg viewBox="0 0 1440 430" preserveAspectRatio="xMidYMax slice">
+        <defs>
+          <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F3F7FA" stop-opacity="0"/><stop offset="1" stop-color="#EAF0E4"/>
+          </linearGradient>
+          <linearGradient id="panelG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#2C5878"/><stop offset="1" stop-color="#1E4059"/>
+          </linearGradient>
+          <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#FFD873" stop-opacity=".55"/><stop offset="1" stop-color="#FFD873" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="1440" height="430" fill="url(#skyG)"/>
+        <!-- sun -->
+        <circle cx="1150" cy="120" r="150" fill="url(#glow)"/>
+        <g class="sun-rays" style="transform-box:fill-box" stroke="#E8A32C" stroke-width="2" stroke-linecap="round" opacity=".6">
+          <path d="M1150 40v-18M1150 200v18M1070 120h-18M1230 120h18M1094 64l-13-13M1206 176l13 13M1206 64l13-13M1094 176l-13 13"/>
+        </g>
+        <circle cx="1150" cy="120" r="42" fill="#FFD873" stroke="#E8A32C" stroke-width="2"/>
+        <!-- rolling hills -->
+        <path d="M0 360 C240 320 420 350 640 340 C900 328 1120 352 1440 336 L1440 430 L0 430 Z" fill="#E3EDD9"/>
+        <path d="M0 400 C300 372 620 392 900 384 C1120 378 1300 390 1440 384 L1440 430 L0 430 Z" fill="#D6E5C9"/>
+        <!-- house 1 (big, left) -->
+        <g transform="translate(120 180)">
+          <rect x="30" y="110" width="240" height="120" fill="#F6F1E7" stroke="#D9D2C2" stroke-width="2"/>
+          <path d="M10 110 L150 20 L290 110 Z" fill="#B0653B"/>
+          <path d="M10 110 L150 20 L290 110" fill="none" stroke="#8F4E2B" stroke-width="3" stroke-linejoin="round"/>
+          <!-- panels on roof -->
+          <g id="roofA">
+            <rect x="70" y="62" width="46" height="30" rx="2" fill="url(#panelG)" stroke="#9CC1DC" stroke-width="1" transform="skewX(-18)" class="pnl"/>
+            <rect x="124" y="62" width="46" height="30" rx="2" fill="url(#panelG)" stroke="#9CC1DC" stroke-width="1" transform="skewX(-18)" class="pnl"/>
+            <rect x="178" y="62" width="46" height="30" rx="2" fill="url(#panelG)" stroke="#9CC1DC" stroke-width="1" transform="skewX(-18)" class="pnl"/>
+          </g>
+          <rect x="60" y="150" width="44" height="80" rx="2" fill="#7A4E2A"/>
+          <circle cx="96" cy="192" r="3" fill="#E8A32C"/>
+          <rect x="130" y="145" width="50" height="42" fill="#CFE3EE" stroke="#A9C4D6" stroke-width="2"/>
+          <rect x="204" y="145" width="50" height="42" fill="#CFE3EE" stroke="#A9C4D6" stroke-width="2"/>
+        </g>
+        <!-- house 2 (middle) -->
+        <g transform="translate(560 230)">
+          <rect x="20" y="80" width="180" height="100" fill="#EFE9F0" stroke="#D6CBD8" stroke-width="2"/>
+          <path d="M4 80 L110 12 L216 80 Z" fill="#5B6B78"/>
+          <g id="roofB">
+            <rect x="58" y="42" width="38" height="24" rx="2" fill="url(#panelG)" stroke="#9CC1DC" stroke-width="1" transform="skewX(-16)" class="pnl"/>
+            <rect x="104" y="42" width="38" height="24" rx="2" fill="url(#panelG)" stroke="#9CC1DC" stroke-width="1" transform="skewX(-16)" class="pnl"/>
+          </g>
+          <rect x="48" y="112" width="36" height="68" rx="2" fill="#4E5E6B"/>
+          <rect x="110" y="108" width="42" height="36" fill="#CFE3EE" stroke="#A9C4D6" stroke-width="2"/>
+        </g>
+        <!-- house 3 (right, flat roof) -->
+        <g transform="translate(920 250)">
+          <rect x="0" y="40" width="200" height="130" fill="#F6F1E7" stroke="#D9D2C2" stroke-width="2"/>
+          <rect x="-6" y="30" width="212" height="12" fill="#8F9AA3"/>
+          <g id="roofC">
+            <rect x="18" y="2" width="44" height="26" rx="2" fill="url(#panelG)" stroke="#9CC1DC" stroke-width="1" transform="skewX(-30)" class="pnl"/>
+            <rect x="72" y="2" width="44" height="26" rx="2" fill="url(#panelG)" stroke="#9CC1DC" stroke-width="1" transform="skewX(-30)" class="pnl"/>
+            <rect x="126" y="2" width="44" height="26" rx="2" fill="url(#panelG)" stroke="#9CC1DC" stroke-width="1" transform="skewX(-30)" class="pnl"/>
+          </g>
+          <rect x="26" y="88" width="40" height="82" rx="2" fill="#6E5B47"/>
+          <rect x="92" y="88" width="44" height="38" fill="#CFE3EE" stroke="#A9C4D6" stroke-width="2"/>
+          <rect x="150" y="88" width="34" height="38" fill="#CFE3EE" stroke="#A9C4D6" stroke-width="2"/>
+        </g>
+        <!-- trees -->
+        <g fill="#7FA86A">
+          <circle cx="480" cy="330" r="34"/><rect x="475" y="348" width="10" height="34" fill="#6E5B47"/>
+          <circle cx="1330" cy="342" r="40"/><rect x="1324" y="366" width="11" height="38" fill="#6E5B47"/>
+          <circle cx="60" cy="356" r="26"/><rect x="56" y="370" width="8" height="26" fill="#6E5B47"/>
+        </g>
+        <!-- e-car charging -->
+        <g transform="translate(760 380)">
+          <rect x="0" y="8" width="96" height="26" rx="12" fill="#2E6E52"/>
+          <path d="M14 10 C20 -2 76 -2 84 10 Z" fill="#3E8265"/>
+          <circle cx="22" cy="36" r="9" fill="#26332C"/><circle cx="76" cy="36" r="9" fill="#26332C"/>
+          <rect x="106" y="-6" width="10" height="44" rx="3" fill="#4E5E6B"/>
+          <path d="M104 12 L98 12" stroke="#E8A32C" stroke-width="3" stroke-linecap="round"/>
+          <path d="M113 4 l-4 7 h6 l-4 7" stroke="#FFD873" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ── STRIP ── -->
+  <section class="strip" aria-label="Kennzahlen">
+    <div class="wrap">
+      <div class="metric reveal"><strong>DE-first</strong><span>Beratungssprache</span></div>
+      <div class="metric reveal" data-d="1"><strong>0 €</strong><span>unverbindlicher Check</span></div>
+      <div class="metric reveal" data-d="2"><strong>3 Min</strong><span>bis zur Ersteinschätzung</span></div>
+      <div class="metric reveal" data-d="3"><strong>Dach &amp; Speicher</strong><span>Qualifizierung</span></div>
+    </div>
+  </section>
+
+  <!-- ── EIGNUNG ── -->
+  <section class="section" id="rechner">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Eignung</p>
+        <h2 class="display">Qualifizierung vor dem Verkaufsgespräch.</h2>
+        <p>Solar-Leads sind nur wertvoll, wenn die Basis stimmt. Diese Demo zeigt, wie der Assistent nicht nur antwortet, sondern strukturierte Informationen sammelt — in drei klaren Schritten.</p>
+      </div>
+      <div class="steps">
+        <article class="step reveal">
+          <h3>Dach</h3>
+          <p>Satteldach oder Flachdach, Ausrichtung, Verschattung und ungefähre Fläche — die Grundlage jeder seriösen Auslegung.</p>
+        </article>
+        <article class="step reveal" data-d="1">
+          <h3>Haushalt</h3>
+          <p>Eigentum, Jahresverbrauch, Wärmepumpe oder E-Auto und das Interesse an einem Speicher.</p>
+        </article>
+        <article class="step reveal" data-d="2">
+          <h3>Termin</h3>
+          <p>Der Assistent bucht eine Beratung erst, wenn die wichtigsten Daten geklärt sind — kein Termin ins Blaue.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ERSTEINSCHÄTZUNG ── -->
+  <section class="section check" id="check">
+    <div class="wrap check-grid">
+      <div class="reveal">
+        <p class="eyebrow">Ersteinschätzung</p>
+        <h2 class="display">Eine ehrliche Ampel statt erfundener Preise.</h2>
+        <p>Nach drei Fragen zeigt der Assistent eine qualitative Einschätzung: Eignung des Dachs, Eigenverbrauchs-Potenzial und der sinnvolle nächste Schritt. Die echten Zahlen entstehen im Beratungsgespräch — sauber gerechnet aus Dach, Verbrauch und Speicher.</p>
+        <div class="hero-actions" style="margin-top:22px">
+          <button class="btn" type="button" data-open-chat>Jetzt grob prüfen</button>
+        </div>
+      </div>
+      <div class="gauge reveal" data-d="1">
+        <div>
+          <div class="k">Grobe Ersteinschätzung</div>
+          <div class="big" id="gaugeVal">gut geeignet</div>
+        </div>
+        <div>
+          <div class="k" style="margin-bottom:8px">Eigenverbrauchs-Potenzial</div>
+          <div class="bar"><i id="gaugeBar"></i></div>
+        </div>
+        <div>
+          <div class="row"><b>Satteldach, Süd-Ausrichtung</b><span class="ok">✓ sehr gut</span></div>
+          <div class="row"><b>Verschattung gering</b><span class="ok">✓ gut</span></div>
+          <div class="row"><b>4.200 kWh/Jahr + E-Auto</b><span class="ok">✓ Speicher sinnvoll</span></div>
+        </div>
+        <p class="hint">Qualitative Ampel, kein verbindliches Angebot. Die echten Zahlen entstehen im Beratungsgespräch aus Dach, Verbrauch und Speicher.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABLAUF ── -->
+  <section class="section" id="ablauf">
+    <div class="wrap">
+      <div class="band reveal">
+        <svg class="band-sun" viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke="#E8A32C" stroke-width="2">
+          <circle cx="100" cy="100" r="46"/>
+          <path d="M100 24v-16M100 176v16M24 100H8M176 100h16M46 46L34 34M154 154l12 12M154 46l12-12M46 154l-12 12" stroke-linecap="round"/>
+        </svg>
+        <div class="inner">
+          <div>
+            <p class="eyebrow">Ablauf</p>
+            <h2 class="display">Ein Assistent, der den Vertrieb vorbereitet.</h2>
+            <p>Der Wert liegt nicht in erfundenen Preisen, sondern in sauberen Daten. So kommt das Beratungsteam vorbereitet ins Gespräch — und Sie verlieren keine Zeit mit Rückfragen.</p>
+          </div>
+          <div class="facts">
+            <div class="fact"><b>01</b><span>Deutliche Nutzenkommunikation statt Technik-Jargon.</span></div>
+            <div class="fact"><b>02</b><span>Kein harter Preisanker — Qualifizierung im Chat.</span></div>
+            <div class="fact"><b>03</b><span>Qualitative Ersteinschätzung zur Eignung.</span></div>
+            <div class="fact"><b>04</b><span>Klare Beratung als nächster, konkreter Schritt.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STIMMEN ── -->
+  <section class="section" id="stimmen" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Stimmen</p>
+        <h2 class="display">Vom ersten Check bis zur Anlage auf dem Dach.</h2>
+        <p>Fiktive Stimmen für diese Demo — in Produktion angebunden an echte Kundenbewertungen.</p>
+      </div>
+      <div class="quotes">
+        <figure class="quote reveal">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„Endlich kein Vertriebler, der am Telefon Preise rät. Der Check hat erst geprüft, ob unser Dach überhaupt taugt.“</blockquote>
+          <cite><span class="dot" aria-hidden="true">F</span><span>Familie Berger · Satteldach Süd<br/><span class="tag">9,6 kWp + Speicher</span></span></cite>
+        </figure>
+        <figure class="quote reveal" data-d="1">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„Mit Wärmepumpe und E-Auto war die Auslegung komplex — das Beratungsteam kam vorbereitet, weil der Assistent alles abgefragt hatte.“</blockquote>
+          <cite><span class="dot" aria-hidden="true">R</span><span>Robert H. · Neubau mit WP<br/><span class="tag">12,4 kWp + 10 kWh Speicher</span></span></cite>
+        </figure>
+        <figure class="quote reveal" data-d="2">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <blockquote>„Uns wurde ehrlich gesagt, dass sich ein Speicher bei unserem Verbrauch noch nicht lohnt. Genau deshalb vertrauen wir denen.“</blockquote>
+          <cite><span class="dot" aria-hidden="true">S</span><span>Sandra &amp; Timo L. · Reihenhaus<br/><span class="tag">5,8 kWp ohne Speicher</span></span></cite>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="section check" id="faq">
+    <div class="wrap faq-grid">
+      <div class="reveal">
+        <p class="eyebrow">Häufige Fragen</p>
+        <h2 class="display">Ehrliche Antworten, bevor Sie unterschreiben.</h2>
+        <p>Die häufigsten Fragen vor dem Solar-Check — kurz beantwortet. Alles Weitere klärt der Assistent oder das Beratungsteam.</p>
+        <div class="hero-actions" style="margin-top:22px">
+          <button class="btn ghost" type="button" data-open-chat>Eigene Frage stellen</button>
+        </div>
+      </div>
+      <div class="qa reveal" data-d="1">
+        <details open>
+          <summary>Lohnt sich Solar auch bei Ost-West-Dach?</summary>
+          <div class="a">Ja, häufig. Ost-West verteilt den Ertrag über den Tag und passt gut zum Eigenverbrauch — die Süd-Ausrichtung ist ideal, aber kein Muss.</div>
+        </details>
+        <details>
+          <summary>Brauche ich einen Speicher?</summary>
+          <div class="a">Ein Speicher hebt den Eigenverbrauch spürbar an, lohnt sich aber nicht in jedem Haushalt. Der Check fragt Verbrauch und Tagesprofil ab, bevor jemand etwas empfiehlt.</div>
+        </details>
+        <details>
+          <summary>Was kostet der Check — und was kommt danach?</summary>
+          <div class="a">Der Check ist kostenlos und unverbindlich. Danach folgt bei Eignung ein Beratungsgespräch mit echten Zahlen — kein automatischer Vertrag, kein Druck.</div>
+        </details>
+        <details>
+          <summary>Gibt es Förderung?</summary>
+          <div class="a">Es gibt Einspeisevergütung und je nach Bundesland weitere Programme. In Produktion pflegt das Team die aktuellen Fördersätze — für die Demo bleibt es beim Hinweis.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BERATUNG ── -->
+  <section class="section beratung" id="beratung">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">Beratung</p>
+        <h2 class="display">Solar-Check starten.</h2>
+        <p>Lokales Demo-Formular ohne Datenversand. In Produktion angebunden an CRM oder Webhook, Kalender oder eine Lead-E-Mail ans Beratungsteam.</p>
+        <div class="beratung-points">
+          <div class="bp"><span class="tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7A4E12" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg></span>Ersteinschätzung innerhalb von 3 Minuten im Chat</div>
+          <div class="bp"><span class="tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7A4E12" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg></span>Beratung nur, wenn die Eignung grundsätzlich stimmt</div>
+          <div class="bp"><span class="tick" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7A4E12" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg></span>Keine Kaltakquise, keine Weitergabe Ihrer Daten</div>
+        </div>
+      </div>
+      <form class="form reveal" data-d="1" id="lead">
+        <div>
+          <label for="l-name">Name</label>
+          <input class="field" id="l-name" required placeholder="Ihr Name" />
+        </div>
+        <div>
+          <label for="l-contact">E-Mail oder Telefon</label>
+          <input class="field" id="l-contact" required placeholder="Damit sich das Team meldet" />
+        </div>
+        <div>
+          <label for="l-typ">Gebäude</label>
+          <select class="field" id="l-typ">
+            <option>Eigenheim</option>
+            <option>Mehrfamilienhaus</option>
+            <option>Gewerbe</option>
+          </select>
+        </div>
+        <button class="btn amber" type="submit">Check anfragen</button>
+        <p class="note" id="lead-note" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>SonnenWerk — fiktive Demo-Marke · Design &amp; Umsetzung: Andrey Volkov</span>
+    <a class="back" href="../../brand-site/index.html">← Zurück zum Portfolio</a>
+  </div>
+</footer>
+
+<button id="chatBtn" type="button" aria-label="Solar-Assistent öffnen" data-open-chat>
+  <span class="av" aria-hidden="true">S</span> Solar-Check
+</button>
+<section id="chat" role="dialog" aria-label="Solar-Assistent" aria-modal="false">
+  <div class="chat-head">
+    <span class="av" aria-hidden="true">S</span>
+    <div>
+      <div class="t">Solar-Assistent</div>
+      <div class="s"><span style="color:#7FE3A8">●</span> Online · Demo</div>
+    </div>
+    <button class="x" id="chatClose" type="button" aria-label="Chat schließen">✕</button>
+  </div>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <form class="chat-foot" id="chatForm">
+    <input id="chatInput" autocomplete="off" placeholder="Dach, Verbrauch, Speicher, Förderung…" aria-label="Nachricht" />
+    <button type="submit" aria-label="Senden">→</button>
+  </form>
+</section>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Reveal on scroll */
+  var revealEls = document.querySelectorAll(".reveal:not(.in)");
+  if("IntersectionObserver" in window && !reduce){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+    },{ threshold:.14, rootMargin:"0px 0px -6% 0px" });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add("in"); });
+  }
+
+  /* Solid nav on scroll */
+  var nav = document.getElementById("nav");
+  function onScroll(){ nav.classList.toggle("solid", scrollY > 24); }
+  addEventListener("scroll", onScroll, { passive:true }); onScroll();
+
+  /* Hero panels: gentle stagger-in */
+  var panels = document.querySelectorAll(".pnl");
+  if(panels.length && !reduce){
+    panels.forEach(function(p,i){
+      p.style.opacity = "0"; p.style.transition = "opacity .6s ease";
+      setTimeout(function(){ p.style.opacity = "1"; }, 700 + i*140);
+    });
+  }
+
+  /* Qualitative gauge fills when scrolled into view */
+  var bar = document.getElementById("gaugeBar");
+  if(bar){
+    if(reduce){ bar.style.transition = "none"; bar.style.width = "72%"; }
+    else if("IntersectionObserver" in window){
+      var gio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ setTimeout(function(){ bar.style.width = "72%"; }, 350); gio.disconnect(); }
+        });
+      },{ threshold:.4 });
+      gio.observe(bar);
+    } else { bar.style.width = "72%"; }
+  }
+
+  /* Chat */
+  var chat = document.getElementById("chat"),
+      log = document.getElementById("chatLog"),
+      input = document.getElementById("chatInput");
+  var greeted = false;
+
+  function scrollDown(){ log.scrollTop = log.scrollHeight; }
+  function push(text, who){
+    var b = document.createElement("div");
+    b.className = "bubble " + (who || "bot");
+    b.textContent = text; log.appendChild(b); scrollDown();
+  }
+  function chips(items){
+    if(!items || !items.length) return;
+    var row = document.createElement("div"); row.className = "chips";
+    items.forEach(function(c){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "chip"; btn.textContent = c;
+      btn.addEventListener("click", function(){ row.remove(); userSay(c); });
+      row.appendChild(btn);
+    });
+    log.appendChild(row); scrollDown();
+  }
+  function botSay(text, items){
+    var t = document.createElement("div"); t.className = "bubble bot"; t.textContent = "…";
+    log.appendChild(t); scrollDown();
+    setTimeout(function(){ t.remove(); push(text,"bot"); chips(items); }, reduce ? 160 : 600);
+  }
+  function openChat(){
+    chat.classList.add("open");
+    if(!greeted){
+      greeted = true;
+      botSay("Hallo! Ich prüfe grob, ob Solar zu Ihnen passt: Dachart, Eigentum, Verbrauch und Speicherinteresse. Womit fangen wir an?",
+        ["Mein Dach","Stromverbrauch","Lohnt sich das?"]);
+    }
+    setTimeout(function(){ input.focus(); }, 60);
+  }
+  function closeChat(){ chat.classList.remove("open"); }
+  function userSay(text){ text=(text||"").trim(); if(!text) return; push(text,"user"); route(text); }
+
+  function route(text){
+    var t = text.toLowerCase();
+    if(/dach|sattel|flach|ausrichtung|schatten|fläche|süd|nord/.test(t))
+      return botSay("Gut. Ist das Dach Ihr Eigentum, wie ist die Ausrichtung (idealerweise Süd, aber Ost/West geht auch), und gibt es viel Verschattung durch Bäume oder Nachbargebäude?",
+        ["Stromverbrauch","Speicher","Beratung buchen"]);
+    if(/verbrauch|kwh|strom|wärmepumpe|e-auto|auto|heizung/.test(t))
+      return botSay("Der Jahresverbrauch hilft bei der Auslegung. Haben Sie eine Wärmepumpe oder ein E-Auto — oder planen Sie beides? Das erhöht den sinnvollen Anlagenumfang deutlich.",
+        ["Speicher","Lohnt sich das?","Beratung buchen"]);
+    if(/speicher|batterie|akku|nacht/.test(t))
+      return botSay("Ein Speicher hebt den Eigenverbrauch spürbar an. Ob er sich lohnt, hängt von Verbrauch und Tagesprofil ab — das prüfen wir im Termin mit echten Zahlen.",
+        ["Lohnt sich das?","Beratung buchen"]);
+    if(/lohnt|rendite|amortis|spar|ersparnis|payback|rechnet/.test(t))
+      return botSay("Grobe Faustregel für diese Demo: ein passendes Dach mit Speicher deckt oft 60–80 % des Eigenbedarfs, die Amortisation liegt meist im Bereich ~10–12 Jahre. Ihre echten Zahlen hängen von Verbrauch, Ausrichtung und Speicher ab — die rechnen wir im Beratungsgespräch sauber durch.",
+        ["Beratung buchen","Förderung"]);
+    if(/förder|zuschuss|kfw|eeg|einspeise/.test(t))
+      return botSay("Es gibt Einspeisevergütung und je nach Bundesland/Programm weitere Zuschüsse. In Produktion pflegt das Team die aktuellen Fördersätze — für die Demo bleibt es beim Hinweis.",
+        ["Lohnt sich das?","Beratung buchen"]);
+    if(/termin|beratung|angebot|buchen|gespräch|kontakt/.test(t))
+      return botSay("Gern. Hinterlassen Sie Name und Kontakt im Formular, dann geht der qualifizierte Lead ans Beratungsteam — mit den Eckdaten, die wir hier geklärt haben.",
+        ["Zum Formular"]);
+    if(/hallo|hi|hey|guten|servus|moin/.test(t))
+      return botSay("Hallo! Ich kann Dach, Verbrauch, Speicher und Förderung grob vorqualifizieren. Was interessiert Sie zuerst?",
+        ["Mein Dach","Lohnt sich das?","Beratung buchen"]);
+    return botSay("Ich kann Dach, Verbrauch, Speicher, Förderung und die grobe Eignung vorqualifizieren — oder direkt eine Beratung anbahnen. Was passt?",
+      ["Mein Dach","Lohnt sich das?","Beratung buchen"]);
+  }
+
+  document.querySelectorAll("[data-open-chat]").forEach(function(b){ b.addEventListener("click", function(){ openChat(); }); });
+  document.getElementById("chatClose").addEventListener("click", closeChat);
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && chat.classList.contains("open")) closeChat(); });
+  document.getElementById("chatForm").addEventListener("submit", function(e){
+    e.preventDefault(); var v = input.value; input.value = ""; userSay(v);
+  });
+  document.getElementById("lead").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("lead-note").textContent = "Danke — im Demo lokal erfasst. In Produktion geht der Lead ans Beratungsteam.";
+    this.reset();
+  });
+})();
+</script>
+</body>
+</html>

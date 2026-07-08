@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en" id="top">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NÛR — Private Residences, Dubai</title>
+<meta name="description" content="A private-client brokerage for off-market trophy residences in Dubai — penthouses, branded residences and Palm villas. Dubai, privately arranged." />
+<meta name="robots" content="noindex" />
+<meta property="og:title" content="NÛR — Private Residences, Dubai" />
+<meta property="og:description" content="Off-market trophy residences in Dubai, privately arranged. Portfolio demo by Andrey Volkov." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="og.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="og.jpg" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20fill='%230A0F1E'/%3E%3Ctext%20x='16'%20y='23'%20font-size='20'%20fill='%23E6C98C'%20text-anchor='middle'%20font-family='Georgia'%3EN%3C/text%3E%3C/svg%3E" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0A0F1E', abyss: '#111A30', line: '#2A3550',
+          porcelain: '#ECEEF1', champagne: '#E6C98C', brass: '#B07F3A',
+        },
+        fontFamily: {
+          display: ['Marcellus', 'serif'],
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root{ --ink:#0A0F1E; --abyss:#111A30; --line:#2A3550; --porcelain:#ECEEF1; --champagne:#E6C98C; --brass:#B07F3A; }
+  html{ scroll-behavior:smooth; scroll-padding-top:6rem; }
+  body{ background:var(--ink); color:var(--porcelain); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  ::selection{ background:var(--champagne); color:var(--ink); }
+
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+    outline:2px solid var(--champagne); outline-offset:3px; border-radius:2px;
+  }
+
+  .eyebrow{ font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.3em; font-size:.7rem; color:var(--champagne); }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+  .display{ font-family:'Marcellus',serif; font-weight:400; letter-spacing:.01em; }
+
+  .text-gradient{ background:linear-gradient(118deg,#F4E7C6,#E6C98C 42%,#B07F3A); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .rule-gold{ height:1px; width:54px; background:linear-gradient(90deg,var(--champagne),transparent); }
+
+  .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.6em; font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.18em; font-size:.7rem; padding:1.05rem 1.7rem; border-radius:2px; cursor:pointer; transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,background .35s,color .35s,border-color .35s; white-space:nowrap; }
+  .btn-primary{ background:linear-gradient(118deg,#F4E7C6,#E6C98C 46%,#C99A53); color:#0A0F1E; font-weight:500; }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 34px -12px rgba(230,201,140,.5); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--porcelain); background:transparent; }
+  .btn-ghost:hover{ border-color:var(--champagne); color:var(--champagne); }
+
+  #nav{ transition:background-color .5s ease, border-color .5s ease, backdrop-filter .5s ease; border-bottom:1px solid transparent; }
+  #nav.nav-solid{ background:rgba(10,15,30,.82); backdrop-filter:blur(14px); border-bottom-color:rgba(42,53,80,.6); }
+
+  .lattice{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .vignette{ position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(120% 90% at 78% 12%, rgba(230,201,140,.10), transparent 42%),
+              radial-gradient(120% 120% at 50% 100%, rgba(10,15,30,.85), transparent 60%); }
+
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal[data-d="1"]{ transition-delay:.09s } .reveal[data-d="2"]{ transition-delay:.18s } .reveal[data-d="3"]{ transition-delay:.27s }
+
+  .hr-fade{ height:1px; background:linear-gradient(90deg,transparent,var(--line) 18%,var(--line) 82%,transparent); }
+  .img-cover{ background-size:cover; background-position:center; background-color:#0E1830; }
+  .plate{ position:relative; overflow:hidden; background-color:#0e1830; background-image:var(--g, linear-gradient(140deg,#1a2742,#0c1526)); }
+  .glyph{ position:absolute; right:-4%; bottom:-6%; width:60%; height:60%; stroke:#E6C98C; stroke-width:1.4; fill:none; opacity:.13; pointer-events:none; }
+  .hero-sky{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+
+  .divider{ height:70px; position:relative; overflow:hidden; }
+  .divider .lattice{ opacity:.4; }
+  .divider::before,.divider::after{ content:''; position:absolute; top:50%; height:1px; width:30%; background:linear-gradient(90deg,transparent,var(--line)); }
+  .divider::before{ left:0 } .divider::after{ right:0; transform:scaleX(-1) }
+
+  .card{ background:var(--abyss); border:1px solid rgba(42,53,80,.55); transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .5s,box-shadow .5s; }
+  .card:hover{ transform:translateY(-6px); border-color:rgba(230,201,140,.4); box-shadow:0 26px 50px -28px rgba(0,0,0,.8); }
+  .card:hover .card-img{ transform:scale(1.05); }
+  .card-img{ transition:transform .8s cubic-bezier(.2,.7,.2,1); }
+
+  .nbhd{ position:relative; overflow:hidden; border:1px solid rgba(42,53,80,.5); }
+  .nbhd .plate{ transition:transform .9s cubic-bezier(.2,.7,.2,1); }
+  .nbhd:hover .plate{ transform:scale(1.06); }
+  .nbhd-scrim{ position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,15,30,.15),rgba(10,15,30,.92)); }
+
+  .field{ width:100%; background:rgba(10,15,30,.5); border:1px solid var(--line); color:var(--porcelain); padding:.85rem 1rem; font-size:.95rem; border-radius:2px; transition:border-color .3s; }
+  .field::placeholder{ color:rgba(236,238,241,.4) } .field:focus{ border-color:var(--champagne); outline:none; }
+  .lbl{ font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.18em; font-size:.62rem; color:rgba(236,238,241,.55); margin-bottom:.45rem; display:block; }
+
+  /* ── Concierge / chatbot ── */
+  #launcher{ position:fixed; right:1.4rem; bottom:1.4rem; z-index:60; width:62px; height:62px; border-radius:50%;
+    background:linear-gradient(135deg,#F4E7C6,#E6C98C 45%,#C2924B); color:#0A0F1E; display:grid; place-items:center;
+    box-shadow:0 14px 34px -10px rgba(230,201,140,.5),0 0 0 1px rgba(244,231,198,.6) inset, 0 0 0 6px rgba(230,201,140,.08);
+    cursor:pointer; transition:transform .4s cubic-bezier(.2,.7,.2,1); }
+  #launcher:hover{ transform:translateY(-3px) scale(1.04); }
+  #launcher .dot{ position:absolute; top:5px; right:5px; width:11px; height:11px; border-radius:50%; background:#5FD08A; border:2px solid #0A0F1E; }
+  @keyframes pulse{ 0%{ box-shadow:0 0 0 0 rgba(95,208,138,.5)} 70%{ box-shadow:0 0 0 8px rgba(95,208,138,0)} 100%{ box-shadow:0 0 0 0 rgba(95,208,138,0)} }
+  #launcher .dot{ animation:pulse 2.4s infinite; }
+
+  #chat{ position:fixed; right:1.4rem; bottom:max(1.4rem,env(safe-area-inset-bottom)); z-index:61; width:min(380px,calc(100vw - 2rem)); height:min(600px,calc(100vh - 2rem)); height:min(600px,calc(100dvh - 2rem));
+    background:var(--abyss); border:1px solid rgba(42,53,80,.8); border-radius:14px; display:flex; flex-direction:column; overflow:hidden;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.9); transform:translateY(24px) scale(.96); opacity:0; pointer-events:none; transform-origin:bottom right;
+    transition:opacity .35s ease, transform .4s cubic-bezier(.2,.7,.2,1); }
+  #chat.open{ opacity:1; transform:none; pointer-events:auto; }
+  .chat-head{ padding:1rem 1.1rem; display:flex; align-items:center; gap:.75rem; border-bottom:1px solid rgba(42,53,80,.7); background:linear-gradient(180deg,rgba(230,201,140,.06),transparent); }
+  .chat-av{ width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,#F4E7C6,#C2924B); color:#0A0F1E; display:grid; place-items:center; font-family:'Marcellus',serif; font-size:1.1rem; flex:none; }
+  .chat-body{ flex:1; overflow-y:auto; padding:1.1rem; display:flex; flex-direction:column; gap:.7rem; scrollbar-width:thin; scrollbar-color:#2A3550 transparent; }
+  .chat-body::-webkit-scrollbar{ width:6px } .chat-body::-webkit-scrollbar-thumb{ background:#2A3550; border-radius:3px }
+  .bubble{ max-width:84%; padding:.7rem .9rem; font-size:.9rem; line-height:1.5; border-radius:12px; white-space:pre-line; animation:rise .35s ease; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(8px)} to{ opacity:1; transform:none} }
+  .b-bot{ align-self:flex-start; background:rgba(10,15,30,.55); border:1px solid rgba(42,53,80,.7); color:var(--porcelain); border-bottom-left-radius:3px; }
+  .b-user{ align-self:flex-end; background:linear-gradient(118deg,#E6C98C,#C2924B); color:#0A0F1E; font-weight:500; border-bottom-right-radius:3px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:.4rem; padding:.2rem .1rem .1rem; }
+  .chip{ font-family:'IBM Plex Mono',monospace; font-size:.66rem; letter-spacing:.04em; text-transform:uppercase; padding:.5rem .7rem; border:1px solid rgba(230,201,140,.4); color:var(--champagne); border-radius:20px; cursor:pointer; background:transparent; transition:background .25s,color .25s; }
+  .chip:hover{ background:var(--champagne); color:var(--ink); }
+  .typing{ align-self:flex-start; display:flex; gap:4px; padding:.8rem .9rem; background:rgba(10,15,30,.55); border:1px solid rgba(42,53,80,.7); border-radius:12px; }
+  .typing span{ width:6px; height:6px; border-radius:50%; background:var(--champagne); opacity:.6; animation:blink 1.2s infinite; }
+  .typing span:nth-child(2){ animation-delay:.2s } .typing span:nth-child(3){ animation-delay:.4s }
+  @keyframes blink{ 0%,100%{ opacity:.25; transform:translateY(0)} 50%{ opacity:1; transform:translateY(-3px)} }
+  .chat-foot{ border-top:1px solid rgba(42,53,80,.7); padding:.7rem; display:flex; gap:.5rem; align-items:center; }
+  .chat-foot input{ flex:1; background:rgba(10,15,30,.5); border:1px solid rgba(42,53,80,.7); color:var(--porcelain); padding:.6rem .8rem; border-radius:20px; font-size:.88rem; }
+  .chat-foot input:focus{ outline:none; border-color:var(--champagne); }
+  .chat-send{ width:38px; height:38px; flex:none; border-radius:50%; background:linear-gradient(135deg,#E6C98C,#C2924B); color:#0A0F1E; display:grid; place-items:center; cursor:pointer; }
+  .chat-note{ font-size:.62rem; color:rgba(236,238,241,.4); text-align:center; padding:0 .7rem .55rem; }
+  .lead-mini{ display:flex; flex-direction:column; gap:.5rem; margin-top:.2rem; }
+  .lead-mini input{ background:rgba(10,15,30,.5); border:1px solid rgba(42,53,80,.7); color:var(--porcelain); padding:.6rem .75rem; border-radius:8px; font-size:.85rem; }
+  .lead-mini input:focus{ outline:none; border-color:var(--champagne); }
+  .lead-mini button{ font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.14em; font-size:.66rem; background:linear-gradient(118deg,#E6C98C,#C2924B); color:#0A0F1E; padding:.6rem; border-radius:8px; cursor:pointer; font-weight:500; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+    .reveal{ opacity:1 !important; transform:none !important; }
+  }
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+
+<!-- Mashrabiya pattern (defined once, referenced as fill across the page) -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+  <pattern id="mash" width="46" height="46" patternUnits="userSpaceOnUse">
+    <g fill="none" stroke="#E6C98C" stroke-width="0.8" stroke-opacity="0.6">
+      <rect x="11.5" y="11.5" width="23" height="23"></rect>
+      <rect x="11.5" y="11.5" width="23" height="23" transform="rotate(45 23 23)"></rect>
+      <path d="M23 -5 L23 11.5 M23 34.5 L23 51 M-5 23 L11.5 23 M34.5 23 L51 23"></path>
+      <circle cx="23" cy="23" r="2.4"></circle>
+    </g>
+  </pattern>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#0A0F1E"/><stop offset=".5" stop-color="#0E1730"/><stop offset=".8" stop-color="#1E1922"/><stop offset="1" stop-color="#3A2A1C"/>
+  </linearGradient>
+  <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#D9A85C" stop-opacity=".5"/><stop offset="1" stop-color="#D9A85C" stop-opacity="0"/>
+  </radialGradient>
+  <g id="g-villa" fill="none"><path d="M14 64 H86 M22 64 V44 H78 V64 M34 44 V30 H66 V44 M18 74 H82"/></g>
+  <g id="g-tower" fill="none"><path d="M40 16 H60 V84 H40 Z M40 28 H60 M40 40 H60 M40 52 H60 M40 64 H60 M40 76 H60"/></g>
+  <g id="g-island" fill="none"><path d="M50 84 V50 M50 50 C42 42 30 44 24 36 M50 50 C58 42 70 44 76 36 M50 50 C45 40 46 30 50 22 M50 50 C55 40 54 30 50 22"/></g>
+  <g id="g-pent" fill="none"><path d="M22 80 H78 V48 H60 V34 H40 V48 H22 Z M28 48 H72 M40 34 V48 M33 62 H67"/></g>
+</defs></svg>
+
+<!-- ───────────────── NAV ───────────────── -->
+<header id="nav" class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    <a href="#top" class="display text-2xl tracking-wide" aria-label="NÛR home">N<span class="text-gradient">Û</span>R</a>
+    <nav class="hidden md:flex items-center gap-10 text-sm text-porcelain/75" aria-label="Primary">
+      <a href="#collection" class="hover:text-champagne transition-colors">Collection</a>
+      <a href="#neighbourhoods" class="hover:text-champagne transition-colors">Neighbourhoods</a>
+      <a href="#advisory" class="hover:text-champagne transition-colors">Advisory</a>
+      <a href="#concierge" class="hover:text-champagne transition-colors">Concierge</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <a href="#contact" class="hidden sm:inline-flex btn btn-ghost" style="padding:.7rem 1.1rem">Private viewing</a>
+      <button id="navToggle" class="md:hidden w-10 h-10 grid place-items-center text-porcelain" aria-label="Open menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="md:hidden hidden border-t border-line/60 bg-ink/95 backdrop-blur-xl">
+    <nav class="px-6 py-5 flex flex-col gap-4 text-porcelain/85" aria-label="Mobile">
+      <a href="#collection">Collection</a>
+      <a href="#neighbourhoods">Neighbourhoods</a>
+      <a href="#advisory">Advisory</a>
+      <a href="#concierge">Concierge</a>
+      <a href="#contact" class="btn btn-primary mt-2">Request a private viewing</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ───────────────── HERO ───────────────── -->
+<section class="relative min-h-screen flex items-center" aria-label="Introduction">
+  <svg class="hero-sky" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <rect width="1440" height="600" fill="url(#sky)"/>
+    <ellipse cx="930" cy="500" rx="560" ry="190" fill="url(#sun)"/>
+    <g fill="#0c1730"><rect x="60" y="370" width="64" height="230"/><rect x="150" y="330" width="44" height="270"/><rect x="210" y="395" width="78" height="205"/><rect x="1140" y="350" width="60" height="250"/><rect x="1220" y="320" width="48" height="280"/><rect x="1286" y="390" width="84" height="210"/></g>
+    <g fill="#070c1a"><rect x="120" y="300" width="58" height="300"/><rect x="300" y="345" width="70" height="255"/><rect x="385" y="280" width="40" height="320"/><rect x="470" y="360" width="64" height="240"/><path d="M560 250 l12 0 8 350 -28 0 z"/><path d="M705 150 l16 0 11 450 -38 0 z"/><rect x="775" y="320" width="74" height="280"/><rect x="865" y="270" width="46" height="330"/><rect x="930" y="360" width="88" height="240"/><rect x="1035" y="330" width="58" height="270"/></g>
+    <g fill="#E6C98C" opacity=".55"><rect x="713" y="210" width="4" height="6"/><rect x="721" y="246" width="4" height="6"/><rect x="713" y="290" width="4" height="6"/><rect x="721" y="330" width="4" height="6"/><rect x="792" y="350" width="4" height="5"/><rect x="804" y="384" width="4" height="5"/><rect x="876" y="300" width="4" height="5"/><rect x="884" y="344" width="4" height="5"/><rect x="954" y="392" width="4" height="5"/><rect x="980" y="420" width="4" height="5"/><rect x="328" y="378" width="4" height="5"/><rect x="500" y="402" width="4" height="5"/></g>
+    <rect x="0" y="566" width="1440" height="34" fill="#0a1124" opacity=".5"/>
+  </svg>
+  <svg id="heroLattice" class="lattice" aria-hidden="true" style="opacity:.16"><rect width="100%" height="120%" fill="url(#mash)"/></svg>
+  <div class="vignette"></div>
+
+  <div class="relative max-w-6xl mx-auto px-6 w-full pt-28 pb-20">
+    <p class="eyebrow reveal in">Private-client real estate · Dubai</p>
+    <h1 class="display text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mt-6 max-w-3xl reveal" data-d="1">
+      Dubai, <span class="text-gradient">privately</span> arranged.
+    </h1>
+    <p class="mt-7 text-lg text-porcelain/70 max-w-xl leading-relaxed reveal" data-d="2">
+      A discreet brokerage for off-market penthouses, branded residences and Palm villas — represented for international families who value the address, and the silence around it.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center gap-4 reveal" data-d="3">
+      <a href="#contact" class="btn btn-primary">Request a private viewing</a>
+      <a href="#collection" class="btn btn-ghost">View the collection</a>
+    </div>
+    <div class="mt-16 flex flex-wrap items-center gap-x-10 gap-y-3 mono text-xs text-porcelain/55 reveal" data-d="3">
+      <span><span class="text-champagne">AED 2.4B</span> placed</span>
+      <span class="hidden sm:inline text-line">/</span>
+      <span><span class="text-champagne">350</span> residences</span>
+      <span class="hidden sm:inline text-line">/</span>
+      <span>Off-market access</span>
+    </div>
+  </div>
+
+  <div class="absolute bottom-7 left-1/2 -translate-x-1/2 mono text-[.6rem] tracking-[.3em] text-porcelain/40 uppercase">Scroll</div>
+</section>
+
+<!-- ───────────────── STATS ───────────────── -->
+<section class="border-y border-line/50 bg-abyss/40">
+  <div class="max-w-6xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-4 divide-x divide-line/40">
+    <div class="py-10 px-4 text-center reveal"><div class="display text-3xl sm:text-4xl text-gradient">AED 2.4B</div><div class="mono text-[.62rem] uppercase tracking-[.2em] text-porcelain/50 mt-3">Placed for private clients</div></div>
+    <div class="py-10 px-4 text-center reveal" data-d="1"><div class="display text-3xl sm:text-4xl text-gradient">350+</div><div class="mono text-[.62rem] uppercase tracking-[.2em] text-porcelain/50 mt-3">Residences represented</div></div>
+    <div class="py-10 px-4 text-center reveal" data-d="2"><div class="display text-3xl sm:text-4xl text-gradient">15 yrs</div><div class="mono text-[.62rem] uppercase tracking-[.2em] text-porcelain/50 mt-3">On the ground in Dubai</div></div>
+    <div class="py-10 px-4 text-center reveal" data-d="3"><div class="display text-3xl sm:text-4xl text-gradient">98%</div><div class="mono text-[.62rem] uppercase tracking-[.2em] text-porcelain/50 mt-3">Clients who return</div></div>
+  </div>
+</section>
+
+<!-- ───────────────── COLLECTION ───────────────── -->
+<section id="collection" class="max-w-6xl mx-auto px-6 py-24 lg:py-32">
+  <div class="flex flex-wrap items-end justify-between gap-6 mb-14">
+    <div class="reveal">
+      <p class="eyebrow">The collection</p>
+      <h2 class="display text-4xl sm:text-5xl mt-4 max-w-md leading-tight">A curated edit, not a catalogue.</h2>
+    </div>
+    <p class="text-porcelain/55 max-w-xs text-sm leading-relaxed reveal" data-d="1">Three residences currently represented privately. Each shown by appointment, to qualified buyers only.</p>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <!-- I -->
+    <article class="card group reveal">
+      <div class="overflow-hidden">
+        <div class="card-img plate h-72" style="--g:linear-gradient(140deg,#21325a,#0d1628)"><svg class="glyph" viewBox="0 0 100 100"><use href="#g-villa"/></svg></div>
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between"><span class="display text-2xl text-champagne/80">I</span><span class="mono text-[.62rem] uppercase tracking-[.18em] text-porcelain/45">Palm Jumeirah</span></div>
+        <h3 class="display text-2xl mt-3">Signature Frond Villa</h3>
+        <p class="mono text-sm text-gradient mt-2">AED 32,000,000</p>
+        <p class="mono text-[.66rem] tracking-[.12em] text-porcelain/55 mt-4">6 BED · 7 BATH · 12,500 SQFT</p>
+        <p class="text-sm text-porcelain/55 mt-1">Frond-tip plot, private beach &amp; pool.</p>
+        <a href="#contact" class="inline-flex items-center gap-2 mono text-[.66rem] uppercase tracking-[.18em] text-champagne mt-5 hover:gap-3 transition-all">Request details →</a>
+      </div>
+    </article>
+    <!-- II -->
+    <article class="card group reveal" data-d="1">
+      <div class="overflow-hidden">
+        <div class="card-img plate h-72" style="--g:linear-gradient(140deg,#1b2c50,#0c1526)"><svg class="glyph" viewBox="0 0 100 100"><use href="#g-pent"/></svg></div>
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between"><span class="display text-2xl text-champagne/80">II</span><span class="mono text-[.62rem] uppercase tracking-[.18em] text-porcelain/45">Downtown</span></div>
+        <h3 class="display text-2xl mt-3">Sky Penthouse</h3>
+        <p class="mono text-sm text-gradient mt-2">AED 18,500,000</p>
+        <p class="mono text-[.66rem] tracking-[.12em] text-porcelain/55 mt-4">4 BED · 5 BATH · 6,200 SQFT</p>
+        <p class="text-sm text-porcelain/55 mt-1">Full Burj Khalifa frontage, private lift.</p>
+        <a href="#contact" class="inline-flex items-center gap-2 mono text-[.66rem] uppercase tracking-[.18em] text-champagne mt-5 hover:gap-3 transition-all">Request details →</a>
+      </div>
+    </article>
+    <!-- III -->
+    <article class="card group reveal" data-d="2">
+      <div class="overflow-hidden">
+        <div class="card-img plate h-72" style="--g:linear-gradient(140deg,#24294e,#0d1424)"><svg class="glyph" viewBox="0 0 100 100"><use href="#g-tower"/></svg></div>
+      </div>
+      <div class="p-6">
+        <div class="flex items-center justify-between"><span class="display text-2xl text-champagne/80">III</span><span class="mono text-[.62rem] uppercase tracking-[.18em] text-porcelain/45">Jumeirah Bay</span></div>
+        <h3 class="display text-2xl mt-3">Branded Residence</h3>
+        <p class="mono text-sm text-gradient mt-2">AED 9,400,000</p>
+        <p class="mono text-[.66rem] tracking-[.12em] text-porcelain/55 mt-4">3 BED · 4 BATH · 3,100 SQFT</p>
+        <p class="text-sm text-porcelain/55 mt-1">Serviced &amp; staffed, direct sea view.</p>
+        <a href="#contact" class="inline-flex items-center gap-2 mono text-[.66rem] uppercase tracking-[.18em] text-champagne mt-5 hover:gap-3 transition-all">Request details →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<div class="divider max-w-6xl mx-auto px-6"><svg class="lattice" aria-hidden="true"><rect width="100%" height="100%" fill="url(#mash)"/></svg></div>
+
+<!-- ───────────────── SIGNATURE FEATURE ───────────────── -->
+<section class="max-w-6xl mx-auto px-6 py-24 lg:py-28">
+  <div class="grid lg:grid-cols-2 gap-px bg-line/40 border border-line/40">
+    <div class="plate min-h-[420px] reveal" style="--g:linear-gradient(135deg,#22325b,#0c1426)"><svg class="glyph" viewBox="0 0 100 100"><use href="#g-pent"/></svg></div>
+    <div class="bg-abyss p-10 lg:p-14 flex flex-col justify-center reveal" data-d="1">
+      <p class="eyebrow">Off-market · By appointment</p>
+      <h2 class="display text-4xl mt-5 leading-tight">The Pearl Penthouse,<br/>Bluewaters</h2>
+      <div class="rule-gold my-6"></div>
+      <p class="text-porcelain/65 leading-relaxed">Two floors above the Gulf, delivered fully bespoke by an Italian atelier. Never publicly listed — released only to qualified buyers, and only in private.</p>
+      <div class="grid grid-cols-2 gap-y-4 gap-x-6 mt-8 mono text-[.66rem] tracking-[.12em] text-porcelain/55">
+        <span>5 BEDROOMS</span><span>7 BATHROOMS</span>
+        <span>14,800 SQFT</span><span>PRIVATE LIFT</span>
+        <span>AIN DUBAI FRONTAGE</span><span class="text-champagne">GUIDE ON APPLICATION</span>
+      </div>
+      <a href="#contact" class="btn btn-primary mt-10 self-start">Request private dossier</a>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── NEIGHBOURHOODS ───────────────── -->
+<section id="neighbourhoods" class="max-w-6xl mx-auto px-6 py-24 lg:py-28">
+  <div class="mb-12 reveal">
+    <p class="eyebrow">Neighbourhoods</p>
+    <h2 class="display text-4xl sm:text-5xl mt-4">Where the addresses live.</h2>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <a href="#contact" class="nbhd group h-80 block reveal">
+      <div class="plate absolute inset-0" style="--g:linear-gradient(160deg,#1d3550,#0c1526)"><svg class="glyph" viewBox="0 0 100 100"><use href="#g-island"/></svg></div>
+      <div class="nbhd-scrim"></div>
+      <div class="absolute bottom-0 p-6"><h3 class="display text-2xl">Palm Jumeirah</h3><p class="text-xs text-porcelain/60 mt-1">Beachfront mansions &amp; signature villas</p></div>
+    </a>
+    <a href="#contact" class="nbhd group h-80 block reveal" data-d="1">
+      <div class="plate absolute inset-0" style="--g:linear-gradient(160deg,#222f54,#0c1526)"><svg class="glyph" viewBox="0 0 100 100"><use href="#g-villa"/></svg></div>
+      <div class="nbhd-scrim"></div>
+      <div class="absolute bottom-0 p-6"><h3 class="display text-2xl">Emirates Hills</h3><p class="text-xs text-porcelain/60 mt-1">Gated estates — Dubai's Beverly Hills</p></div>
+    </a>
+    <a href="#contact" class="nbhd group h-80 block reveal" data-d="2">
+      <div class="plate absolute inset-0" style="--g:linear-gradient(160deg,#26284c,#0c1526)"><svg class="glyph" viewBox="0 0 100 100"><use href="#g-tower"/></svg></div>
+      <div class="nbhd-scrim"></div>
+      <div class="absolute bottom-0 p-6"><h3 class="display text-2xl">Downtown</h3><p class="text-xs text-porcelain/60 mt-1">Burj-front towers &amp; branded residences</p></div>
+    </a>
+    <a href="#contact" class="nbhd group h-80 block reveal" data-d="3">
+      <div class="plate absolute inset-0" style="--g:linear-gradient(160deg,#1d3358,#0c1526)"><svg class="glyph" viewBox="0 0 100 100"><use href="#g-island"/></svg></div>
+      <div class="nbhd-scrim"></div>
+      <div class="absolute bottom-0 p-6"><h3 class="display text-2xl">Jumeirah Bay</h3><p class="text-xs text-porcelain/60 mt-1">Bulgari island — ultra-prime seafront</p></div>
+    </a>
+  </div>
+</section>
+
+<!-- ───────────────── ADVISORY ───────────────── -->
+<section id="advisory" class="bg-abyss/40 border-y border-line/50">
+  <div class="max-w-6xl mx-auto px-6 py-24 lg:py-28">
+    <div class="mb-14 reveal">
+      <p class="eyebrow">Advisory</p>
+      <h2 class="display text-4xl sm:text-5xl mt-4 max-w-lg leading-tight">Beyond the transaction.</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line/30 border border-line/30">
+      <div class="bg-ink p-8 reveal">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E6C98C" stroke-width="1.3"><path d="M14 7a3 3 0 11-3 3m3-3l6-3-1 4 3 1-4 3M11 10l-7 7 2 2 7-7"/></svg>
+        <h3 class="display text-xl mt-5">Off-market access</h3>
+        <p class="text-sm text-porcelain/55 mt-2 leading-relaxed">First sight of residences that never reach a portal.</p>
+      </div>
+      <div class="bg-ink p-8 reveal" data-d="1">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E6C98C" stroke-width="1.3"><rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="9" r="2.2"/><path d="M8.4 15.2c.7-1.7 2.1-2.6 3.6-2.6s2.9.9 3.6 2.6"/><path d="M9 18.5h6"/></svg>
+        <h3 class="display text-xl mt-5">Golden Visa concierge</h3>
+        <p class="text-sm text-porcelain/55 mt-2 leading-relaxed">10-year residency, handled end-to-end — from AED 2M.</p>
+      </div>
+      <div class="bg-ink p-8 reveal" data-d="2">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E6C98C" stroke-width="1.3"><path d="M4 19V5M4 19h16M7 15l3-4 3 2 5-7"/><path d="M18 6h3v3"/></svg>
+        <h3 class="display text-xl mt-5">Yield &amp; ROI advisory</h3>
+        <p class="text-sm text-porcelain/55 mt-2 leading-relaxed">Data-led guidance — ~6.7% average gross yields, 7%+ on prime apartments.</p>
+      </div>
+      <div class="bg-ink p-8 reveal" data-d="3">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E6C98C" stroke-width="1.3"><path d="M5 21v-9l7-5 7 5v9"/><path d="M9 21v-5h6v5"/><path d="M12 3v2"/></svg>
+        <h3 class="display text-xl mt-5">White-glove relocation</h3>
+        <p class="text-sm text-porcelain/55 mt-2 leading-relaxed">Schools, banking, interiors and staff — privately arranged.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── CONCIERGE BAND ───────────────── -->
+<section id="concierge" class="max-w-6xl mx-auto px-6 py-24 lg:py-28">
+  <div class="relative overflow-hidden border border-line/50 bg-abyss px-8 py-16 lg:p-20">
+    <svg class="lattice" aria-hidden="true" style="opacity:.12"><rect width="100%" height="100%" fill="url(#mash)"/></svg>
+    <div class="relative max-w-2xl reveal">
+      <p class="eyebrow">AI concierge</p>
+      <h2 class="display text-4xl sm:text-5xl mt-5 leading-tight">Meet <span class="text-gradient">Layla</span>.</h2>
+      <p class="text-porcelain/65 leading-relaxed mt-6 text-lg">She answers in seconds, at any hour — matching you to off-market residences, explaining Golden Visa thresholds, and booking private viewings on the spot. Ask her anything.</p>
+      <button type="button" data-open-chat class="btn btn-primary mt-9">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6.5A8 8 0 1121 12z"/></svg>
+        Chat with Layla
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── TESTIMONIALS ───────────────── -->
+<section class="max-w-6xl mx-auto px-6 pb-24 lg:pb-28">
+  <div class="grid md:grid-cols-2 gap-6">
+    <figure class="border border-line/50 p-9 lg:p-11 reveal">
+      <div class="display text-5xl text-champagne/30 leading-none">“</div>
+      <blockquote class="display text-2xl leading-snug -mt-4">They showed us a Palm villa that was never advertised. Three weeks later it was ours — without a single open viewing.</blockquote>
+      <figcaption class="mono text-[.66rem] uppercase tracking-[.18em] text-porcelain/50 mt-6">H. Brandt · Zürich</figcaption>
+    </figure>
+    <figure class="border border-line/50 p-9 lg:p-11 reveal" data-d="1">
+      <div class="display text-5xl text-champagne/30 leading-none">“</div>
+      <blockquote class="display text-2xl leading-snug -mt-4">The visa, the schools, the bank accounts — all handled before we landed. NÛR made Dubai feel effortless.</blockquote>
+      <figcaption class="mono text-[.66rem] uppercase tracking-[.18em] text-porcelain/50 mt-6">R. &amp; A. Mehta · London</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────────────── CONTACT ───────────────── -->
+<section id="contact" class="bg-abyss/40 border-t border-line/50">
+  <div class="max-w-6xl mx-auto px-6 py-24 lg:py-32 grid lg:grid-cols-2 gap-14 lg:gap-20">
+    <div class="reveal">
+      <p class="eyebrow">Private office</p>
+      <h2 class="display text-4xl sm:text-5xl mt-5 leading-tight">Begin a private conversation.</h2>
+      <p class="text-porcelain/65 leading-relaxed mt-6 max-w-md">Tell us what you're looking for. A senior advisor — not a call centre — will reply within the hour.</p>
+      <div class="mt-10 space-y-4 mono text-sm text-porcelain/60">
+        <p class="flex items-center gap-3"><span class="text-champagne">↳</span> Discreet, with no obligation</p>
+        <p class="flex items-center gap-3"><span class="text-champagne">↳</span> Your details are never shared</p>
+        <p class="flex items-center gap-3"><span class="text-champagne">↳</span> DIFC · Dubai International Financial Centre</p>
+      </div>
+    </div>
+
+    <div id="leadFormWrap" class="reveal" data-d="1">
+      <form id="leadForm" class="space-y-5 border border-line/50 bg-ink/40 p-7 lg:p-9" novalidate>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div><label class="lbl" for="f-name">Full name</label><input id="f-name" name="name" class="field" placeholder="Your name" required /></div>
+          <div><label class="lbl" for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" class="field" placeholder="+971 ..." required /></div>
+        </div>
+        <div><label class="lbl" for="f-email">Email</label><input id="f-email" name="email" type="email" class="field" placeholder="you@email.com" required /></div>
+        <div><label class="lbl" for="f-budget">Budget</label>
+          <select id="f-budget" name="budget" class="field">
+            <option>Under AED 5M</option><option>AED 5–10M</option><option>AED 10–25M</option><option>AED 25M+</option>
+          </select>
+        </div>
+        <div><label class="lbl" for="f-msg">What are you looking for?</label><textarea id="f-msg" name="message" rows="3" class="field" placeholder="A sea-view penthouse, Golden Visa, an investment..."></textarea></div>
+        <button type="submit" class="btn btn-primary w-full">Request a callback</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── FOOTER ───────────────── -->
+<footer class="border-t border-line/50">
+  <div class="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-10">
+    <div class="md:col-span-1">
+      <div class="display text-2xl">N<span class="text-gradient">Û</span>R</div>
+      <p class="text-sm text-porcelain/50 mt-3 leading-relaxed">Private residences, Dubai.<br/>Off-market, by appointment.</p>
+    </div>
+    <div><h4 class="mono text-[.62rem] uppercase tracking-[.2em] text-porcelain/40 mb-4">Collection</h4><ul class="space-y-2 text-sm text-porcelain/60"><li><a href="#collection" class="hover:text-champagne">Palm Jumeirah</a></li><li><a href="#collection" class="hover:text-champagne">Downtown</a></li><li><a href="#collection" class="hover:text-champagne">Jumeirah Bay</a></li><li><a href="#neighbourhoods" class="hover:text-champagne">Emirates Hills</a></li></ul></div>
+    <div><h4 class="mono text-[.62rem] uppercase tracking-[.2em] text-porcelain/40 mb-4">Company</h4><ul class="space-y-2 text-sm text-porcelain/60"><li><a href="#advisory" class="hover:text-champagne">Advisory</a></li><li><a href="#advisory" class="hover:text-champagne">Golden Visa</a></li><li><a href="#concierge" class="hover:text-champagne">AI Concierge</a></li><li><a href="#contact" class="hover:text-champagne">Private Office</a></li></ul></div>
+    <div><h4 class="mono text-[.62rem] uppercase tracking-[.2em] text-porcelain/40 mb-4">Contact</h4><ul class="space-y-2 text-sm text-porcelain/60"><li>private@nur.ae</li><li>+971 4 000 0000</li><li>DIFC, Dubai</li></ul></div>
+  </div>
+  <div class="border-t border-line/40">
+    <div class="max-w-6xl mx-auto px-6 py-6 flex flex-wrap gap-2 justify-between items-center mono text-[.6rem] tracking-[.1em] text-porcelain/35 uppercase">
+      <span>© 2026 NÛR Private Residences</span>
+      <span>Portfolio demonstration · design &amp; build by Andrey Volkov · all visuals inline SVG</span>
+      <a href="../../brand-site/index.html" class="hover:text-champagne text-porcelain/50">← Back to portfolio</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────────────── CONCIERGE WIDGET ───────────────── -->
+<button id="launcher" type="button" aria-label="Open chat with Layla, the AI concierge">
+  <span class="dot"></span>
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6.5A8 8 0 1121 12z"/></svg>
+</button>
+
+<section id="chat" role="dialog" aria-label="Chat with Layla, AI concierge" aria-modal="false">
+  <div class="chat-head">
+    <div class="chat-av">L</div>
+    <div class="flex-1">
+      <div class="display text-lg leading-none">Layla</div>
+      <div class="mono text-[.6rem] uppercase tracking-[.16em] text-porcelain/50 mt-1"><span style="color:#5FD08A">●</span> AI Concierge · Online</div>
+    </div>
+    <button id="chatClose" type="button" aria-label="Close chat" class="text-porcelain/60 hover:text-champagne w-11 h-11 grid place-items-center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div id="chatBody" class="chat-body" aria-live="polite"></div>
+  <div class="chat-note">Demo assistant — connects to your CRM &amp; a live LLM in production.</div>
+  <form id="chatForm" class="chat-foot">
+    <input id="chatInput" type="text" autocomplete="off" placeholder="Ask Layla anything…" aria-label="Message Layla" />
+    <button type="submit" class="chat-send" aria-label="Send">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
+    </button>
+  </form>
+</section>
+
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* NAV */
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('nav-solid', window.scrollY > 40); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  var navToggle = document.getElementById('navToggle'), mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', function(){
+    var hidden = mobileMenu.classList.toggle('hidden');
+    navToggle.setAttribute('aria-expanded', String(!hidden));
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ mobileMenu.classList.add('hidden'); navToggle.setAttribute('aria-expanded','false'); }); });
+
+  /* REVEAL */
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* HERO PARALLAX */
+  var heroLattice = document.getElementById('heroLattice');
+  if(heroLattice && !reduce){
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if(!ticking){ requestAnimationFrame(function(){ heroLattice.style.transform = 'translateY(' + (window.scrollY * 0.12) + 'px)'; ticking = false; }); ticking = true; }
+    }, {passive:true});
+  }
+
+  /* LEAD FORM */
+  var leadForm = document.getElementById('leadForm');
+  leadForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!leadForm.checkValidity()){ leadForm.reportValidity(); return; }
+    var name = (document.getElementById('f-name').value || '').trim();
+    var first = name ? name.split(' ')[0] : 'there';
+    document.getElementById('leadFormWrap').innerHTML =
+      '<div class="border border-champagne/40 bg-ink/40 p-9 lg:p-11 text-center">' +
+        '<div class="display text-3xl text-gradient">Thank you, ' + escapeHtml(first) + '.</div>' +
+        '<p class="text-porcelain/65 mt-4 leading-relaxed">A senior advisor will be in touch within the hour to arrange your private viewing.</p>' +
+        '<p class="mono text-[.62rem] uppercase tracking-[.18em] text-porcelain/40 mt-6">NÛR Private Office · DIFC</p>' +
+      '</div>';
+  });
+
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+
+  /* ───── CONCIERGE ───── */
+  var chat = document.getElementById('chat'), launcher = document.getElementById('launcher'),
+      chatBody = document.getElementById('chatBody'), chatForm = document.getElementById('chatForm'),
+      chatInput = document.getElementById('chatInput'), chatClose = document.getElementById('chatClose');
+  var greeted = false, leadMode = false;
+
+  function openChat(){
+    chat.classList.add('open'); launcher.style.display = 'none';
+    if(!greeted){ greeted = true; setTimeout(function(){
+      botSay("Good evening — I'm Layla, NÛR's concierge. Are you looking to buy, to invest, or simply exploring Dubai? I can show you off-market residences or walk you through the Golden Visa.",
+        ['Off-market villas','Golden Visa','Investment yield','Book a viewing']);
+    }, 450); }
+    setTimeout(function(){ chatInput.focus(); }, 420);
+  }
+  function closeChat(){ chat.classList.remove('open'); launcher.style.display = 'grid'; launcher.focus(); }
+  launcher.addEventListener('click', openChat);
+  chatClose.addEventListener('click', closeChat);
+  document.querySelectorAll('[data-open-chat]').forEach(function(b){ b.addEventListener('click', openChat); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && chat.classList.contains('open')) closeChat(); });
+
+  function scrollDown(){ chatBody.scrollTop = chatBody.scrollHeight; }
+  function push(text, who){
+    var b = document.createElement('div');
+    b.className = 'bubble ' + (who === 'user' ? 'b-user' : 'b-bot');
+    b.textContent = text; chatBody.appendChild(b); scrollDown(); return b;
+  }
+  function renderChips(chips){
+    if(!chips || !chips.length) return;
+    var wrap = document.createElement('div'); wrap.className = 'chips';
+    chips.forEach(function(c){
+      var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'chip'; btn.textContent = c;
+      btn.addEventListener('click', function(){ wrap.remove(); userSay(c); });
+      wrap.appendChild(btn);
+    });
+    chatBody.appendChild(wrap); scrollDown();
+  }
+  function typing(cb){
+    var t = document.createElement('div'); t.className = 'typing';
+    t.innerHTML = '<span></span><span></span><span></span>'; chatBody.appendChild(t); scrollDown();
+    var delay = reduce ? 220 : 720;
+    setTimeout(function(){ t.remove(); cb(); }, delay);
+  }
+  function botSay(text, chips){ typing(function(){ push(text, 'bot'); renderChips(chips); }); }
+
+  function userSay(text){
+    text = (text || '').trim(); if(!text) return;
+    push(text, 'user');
+    if(leadMode){ return; } // handled by mini-form
+    route(text);
+  }
+
+  function route(text){
+    var t = text.toLowerCase();
+    if(/(that.s all|no thank|nothing else|goodbye|that is all|all good|i.m done|we.re done)/.test(t))
+      return botSay("With pleasure — I'm here whenever you're ready, and an advisor will be in touch. Welcome to NÛR.");
+    if(/(book|viewing|appointment|call ?back|callback|contact|speak|advisor|agent|meeting|arrange)/.test(t)) return startLead();
+    if(/(visa|golden|residency|reside)/.test(t))
+      return botSay("Dubai's Golden Visa is 10-year renewable residency for you and your family on a property purchase from AED 2M — and we handle the entire application end-to-end. Are you buying primarily for the visa?",
+        ['Which properties qualify','Book a viewing','Investment yield']);
+    if(/(yield|roi|return|invest|rent|profit|income)/.test(t))
+      return botSay("Prime Dubai is yielding around 6.7% gross on average, with 7%+ on well-placed apartments — and it's tax-free. I can model the numbers on a specific residence for you.",
+        ['See the collection','Book a viewing','Golden Visa']);
+    if(/(under aed 10m|aed 10|aed 25|25m|10m)/.test(t))
+      return botSay("Noted — I have a few off-market residences in that range. The quickest way is a short private viewing. Shall I have an advisor arrange one?",
+        ['Book a viewing','See the collection']);
+    if(/(price|budget|cost|how much|aed|afford|expensive)/.test(t))
+      return botSay("Our private collection runs from about AED 9M for branded residences up to AED 30M+ for Palm villas. What budget should I work within?",
+        ['Under AED 10M','AED 10–25M','AED 25M+']);
+    if(/(villa|palm|penthouse|residence|property|home|apartment|buy|see|show|collection|listing|qualify)/.test(t))
+      return botSay("We're privately representing a few standouts right now:\n• Palm Jumeirah signature villa — AED 32M\n• Downtown sky penthouse — AED 18.5M\n• Jumeirah Bay branded residence — AED 9.4M\n\nWant the dossier on any of these, or shall I arrange a viewing?",
+        ['Book a viewing','Investment yield','Golden Visa']);
+    if(/(area|where|neighbou|location|downtown|emirates|marina|jumeirah|bay)/.test(t))
+      return botSay("We focus on Dubai's trophy communities — Palm Jumeirah, Emirates Hills, Downtown and Jumeirah Bay. Any of these calling to you?",
+        ['Palm Jumeirah','Downtown','Book a viewing']);
+    if(/(hi|hello|hey|salam|salaam|good (morning|evening|afternoon)|greetings)/.test(t))
+      return botSay("Hello, and welcome to NÛR. I'd be glad to help — are you after a home, an investment, or the Golden Visa?",
+        ['Off-market villas','Golden Visa','Investment yield']);
+    return botSay("Happy to help with off-market residences, the Golden Visa, investment yields, or booking a private viewing. Which would suit — or leave your number and a senior advisor will call you?",
+      ['Off-market villas','Golden Visa','Book a viewing']);
+  }
+
+  function startLead(){
+    leadMode = true;
+    chatInput.disabled = true; chatInput.placeholder = 'Complete the form above…';
+    typing(function(){
+      push("Of course. Leave your name and number and a senior advisor will call you within the hour — no call centre, no obligation.", 'bot');
+      var form = document.createElement('form'); form.className = 'lead-mini';
+      form.innerHTML =
+        '<input name="n" placeholder="Your name" autocomplete="name" required />' +
+        '<input name="p" placeholder="Phone number" autocomplete="tel" required />' +
+        '<button type="submit">Request my call</button>';
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var n = form.n.value.trim(), p = form.p.value.trim();
+        if(!n || !p){ return; }
+        form.remove();
+        push(n + ' · ' + p, 'user');
+        leadMode = false;
+        chatInput.disabled = false; chatInput.placeholder = 'Ask Layla anything…';
+        botSay("Thank you, " + n.split(' ')[0] + ". An advisor will call you shortly. While you wait — would you like the full collection dossier, or to explore the Golden Visa?",
+          ['See the collection','Golden Visa','That’s all']);
+      });
+      chatBody.appendChild(form); scrollDown();
+      var f = form.querySelector('input'); if(f) f.focus();
+    });
+  }
+
+  chatForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = chatInput.value; chatInput.value = '';
+    if(leadMode){ /* let mini-form drive */ if(v.trim()) push(v.trim(),'user'); return; }
+    userSay(v);
+  });
+})();
+</script>
+</body>
+</html>

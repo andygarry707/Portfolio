@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en" id="top">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Northstar Ops — Turn operations into a live decision console</title>
+<meta name="description" content="Demo of a B2B SaaS product page for an operations tool, with a product assistant that explains features, handles objections, and routes qualified teams to a demo." />
+<meta name="robots" content="noindex" />
+<meta property="og:title" content="Northstar Ops — SaaS Demo" />
+<meta property="og:description" content="A crisp product launch page with an AI product assistant. Portfolio demo by Andrey Volkov." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="og.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="og.jpg" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F1524'/%3E%3Cpath d='M6 22l6-7 4 4 5-8 5 6' fill='none' stroke='%235FE3B0' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='19' r='1.6' fill='%238AA0FF'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0F1524; --surface:#161E33; --surface2:#1E2842; --ink:#E6EAF2; --muted:#93A0BD;
+  --line:#28324F; --mint:#5FE3B0; --peri:#8AA0FF; --amber:#F2C265; --radius:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:82px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
+::selection{background:var(--mint);color:#08221A}
+.skip{position:absolute;left:-999px;top:0;background:var(--mint);color:#08221A;padding:10px 14px;z-index:100}
+.skip:focus{left:0}
+.wrap{width:min(1140px,calc(100% - 40px));margin:0 auto}
+.mono{font-family:"IBM Plex Mono",Consolas,monospace}
+.eyebrow{font-family:"IBM Plex Mono",Consolas,monospace;text-transform:uppercase;letter-spacing:.16em;font-size:12px;color:var(--mint);font-weight:500}
+h1{font-weight:600;font-size:clamp(38px,5.4vw,66px);line-height:1.04;letter-spacing:-.02em;margin:16px 0 20px;text-wrap:balance}
+h2{font-weight:600;font-size:clamp(26px,3.4vw,40px);line-height:1.12;letter-spacing:-.015em;margin:0 0 14px;text-wrap:balance}
+h3{font-size:18px;margin:0 0 8px;font-weight:600}
+p{color:var(--muted);margin:0 0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:12px 20px;border-radius:8px;border:1px solid var(--mint);background:var(--mint);color:#08221A;font-weight:600;font-size:15px;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px -18px rgba(95,227,176,.5)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--peri);box-shadow:none}
+.nav{position:sticky;top:0;z-index:40;background:rgba(15,21,36,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav .wrap{height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;letter-spacing:-.01em}
+.brand .dot{width:30px;height:30px;border-radius:8px;background:var(--surface2);display:grid;place-items:center;border:1px solid var(--line)}
+.nav-links{display:flex;gap:22px;font-size:13.5px;color:var(--muted)}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.back{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.back:hover{color:var(--mint)}
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.09s}.reveal[data-d="2"]{transition-delay:.18s}.reveal[data-d="3"]{transition-delay:.27s}
+/* hero */
+.hero{position:relative;padding:76px 0 60px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60% 50% at 75% 20%,rgba(138,160,255,.09),transparent 60%),
+             radial-gradient(50% 45% at 15% 80%,rgba(95,227,176,.07),transparent 60%)}
+.hero-grid{position:relative;display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
+.hero .lead{font-size:18px;max-width:32em}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.trust-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 11px}
+/* console signature */
+.console{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 40px 90px -50px #000,0 0 0 1px rgba(138,160,255,.06)}
+.console-bar{display:flex;align-items:center;gap:8px;padding:12px 14px;background:var(--surface2);border-bottom:1px solid var(--line)}
+.console-bar .d{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.console-bar .ttl{margin-left:8px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+.console-body{padding:16px;display:flex;flex-direction:column;gap:10px}
+.crow{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.crow .name{font-size:14px;font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:5px 9px;border-radius:999px;white-space:nowrap}
+.pill.mint{color:var(--mint);background:rgba(95,227,176,.12);border:1px solid rgba(95,227,176,.3)}
+.pill.warn{color:var(--amber);background:rgba(242,194,101,.12);border:1px solid rgba(242,194,101,.3)}
+.pill.peri{color:var(--peri);background:rgba(138,160,255,.12);border:1px solid rgba(138,160,255,.3)}
+.owner{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted)}
+.ai-row{border:1px solid rgba(95,227,176,.32);background:linear-gradient(180deg,rgba(95,227,176,.06),transparent);border-radius:10px;padding:13px 14px}
+.ai-row .q{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted)}
+.ai-row .q .k{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--peri);border:1px solid rgba(138,160,255,.3);border-radius:5px;padding:2px 6px}
+.ai-row .a{margin-top:10px;font-size:13.5px;color:var(--ink);min-height:1.2em}
+.ai-row .a .tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--mint);margin-right:7px;border:0;padding:0}
+.cursor::after{content:"▍";color:var(--mint);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.risk{display:flex;justify-content:space-between;align-items:center;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);padding:4px 4px 0}
+.risk b{color:var(--mint)}
+/* metric strip */
+.strip{border-block:1px solid var(--line);background:var(--surface)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.metric{padding:24px 18px;text-align:center;border-left:1px solid var(--line);min-width:0}
+.metric:first-child{border-left:0}
+.metric strong{display:block;font-weight:700;font-size:24px;overflow-wrap:anywhere}
+.metric span{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.section{padding:82px 0}
+.sec-head{max-width:36em;margin-bottom:34px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;transition:transform .4s cubic-bezier(.2,.7,.2,1),border-color .4s}
+.card:hover{transform:translateY(-4px);border-color:rgba(138,160,255,.4)}
+.card .ic{width:42px;height:42px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;margin-bottom:16px}
+.card p{margin:0}
+/* how it works */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:step}
+.step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px}
+.step .num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--peri);letter-spacing:.1em;display:inline-block;border:1px solid rgba(138,160,255,.35);border-radius:6px;padding:4px 9px;margin-bottom:16px}
+.step p{margin:0;font-size:14.5px}
+/* integrations */
+.integrations{border-block:1px solid var(--line);background:var(--surface)}
+.integrations .inner{padding:56px 0}
+.logo-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:28px}
+.logo-cell{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:16px 10px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--muted);transition:border-color .3s,color .3s}
+.logo-cell:hover{border-color:var(--peri);color:var(--ink)}
+.logo-cell .sq{width:9px;height:9px;border-radius:3px;flex:none}
+/* proof */
+.proof{background:var(--surface);border-block:1px solid var(--line)}
+.proof .wrap{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.qa{display:grid;gap:12px}
+.qa .item{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:15px 17px}
+.qa .item strong{display:block;margin-bottom:4px}
+.qa .item span{color:var(--muted);font-size:14px}
+/* quote */
+.quote-wrap{max-width:760px;margin:0 auto;text-align:center}
+.quote-wrap blockquote{font-size:clamp(20px,2.6vw,28px);font-weight:500;line-height:1.4;letter-spacing:-.01em;color:var(--ink);margin:0 0 22px}
+.quote-wrap blockquote em{color:var(--mint);font-style:normal}
+.q-who{display:flex;align-items:center;justify-content:center;gap:12px}
+.q-av{width:42px;height:42px;border-radius:50%;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--peri)}
+.q-meta{text-align:left;font-size:13.5px}
+.q-meta b{display:block;color:var(--ink)}
+.q-meta span{color:var(--muted)}
+/* security band */
+.sec-band{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.sec-cell{display:flex;align-items:center;gap:12px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:15px 16px;font-size:13.5px;color:var(--muted)}
+.sec-cell svg{flex:none}
+/* demo form */
+.demo .wrap{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:start}
+.form{display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.form label{font-family:"IBM Plex Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.field{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.field::placeholder{color:#5C6A88}
+.field:focus{outline:none;border-color:var(--mint)}
+.note{font-size:13px;color:var(--muted);margin:0}
+.checklist{display:grid;gap:12px;margin-top:24px}
+.check{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:var(--muted)}
+.check svg{flex:none;margin-top:3px}
+.foot{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:14px}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px}
+/* chat */
+#chatBtn{position:fixed;right:20px;bottom:20px;z-index:60;display:flex;align-items:center;gap:9px;height:52px;padding:0 20px 0 16px;border:0;border-radius:10px;background:var(--mint);color:#08221A;font-weight:600;cursor:pointer;box-shadow:0 18px 40px -18px rgba(95,227,176,.5);transition:transform .3s}
+#chatBtn:hover{transform:translateY(-2px)}
+#chatBtn .av{width:26px;height:26px;border-radius:7px;background:#08221A;color:var(--mint);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:13px}
+#chat{position:fixed;right:20px;bottom:84px;z-index:61;width:min(388px,calc(100vw - 30px));max-height:min(620px,calc(100dvh - 120px));display:none;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 40px 90px -40px #000}
+#chat.open{display:flex}
+.chat-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface2);border-bottom:1px solid var(--line)}
+.chat-head .av{width:38px;height:38px;border-radius:9px;background:var(--bg);color:var(--mint);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;border:1px solid var(--line)}
+.chat-head .t{font-weight:600;line-height:1.2}
+.chat-head .s{font-family:"IBM Plex Mono",monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--mint)}
+.chat-head .x{margin-left:auto;width:36px;height:36px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:8px}
+.chat-demo-note{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.04em;color:var(--muted);background:var(--bg);border-bottom:1px solid var(--line);padding:7px 14px;text-align:center}
+.chat-log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:86%;padding:11px 13px;border-radius:12px;font-size:14px;line-height:1.5;white-space:pre-line}
+.bot{align-self:flex-start;background:var(--bg);border:1px solid var(--line);border-bottom-left-radius:4px}
+.user{align-self:flex-end;background:var(--mint);color:#08221A;border-bottom-right-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:11px;padding:8px 11px;border:1px solid var(--line);color:var(--peri);background:var(--bg);border-radius:8px;cursor:pointer}
+.chip:hover{border-color:var(--peri)}
+.chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.chat-foot input{flex:1;border:1px solid var(--line);border-radius:8px;padding:11px 14px;background:var(--bg);color:var(--ink)}
+.chat-foot input:focus{outline:none;border-color:var(--mint)}
+.chat-foot button{width:44px;height:44px;flex:none;border:0;border-radius:9px;background:var(--mint);color:#08221A;cursor:pointer}
+@media(max-width:980px){
+  .logo-grid{grid-template-columns:repeat(3,1fr)}
+  .sec-band{grid-template-columns:1fr 1fr}
+}
+@media(max-width:860px){
+  .hero-grid,.proof .wrap,.demo .wrap{grid-template-columns:1fr;gap:30px}
+  .cards,.steps{grid-template-columns:1fr}
+  .strip .wrap{grid-template-columns:1fr 1fr}
+  .nav .back,.nav-links{display:none}
+  .hero{padding-top:40px}
+}
+@media(max-width:560px){
+  .logo-grid{grid-template-columns:1fr 1fr}
+  .sec-band{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .cursor::after{content:""}
+  .reveal{opacity:1!important;transform:none!important}
+}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#demo">Skip to the demo request form</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5FE3B0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-6 3 3 4-7 4 5"/></svg></span>Northstar Ops</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#proof">Assistant</a>
+    </nav>
+    <div class="nav-right">
+      <a class="back" href="../../brand-site/index.html">← Portfolio</a>
+      <a class="btn" href="#demo">Book a demo</a>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow reveal in">B2B SaaS · Operations · Demo</p>
+        <h1 class="reveal in" data-d="1">Turn messy operations into a live decision console.</h1>
+        <p class="lead reveal in" data-d="2">A crisp launch page for an ops platform. The assistant explains features, answers integration and security questions, handles objections, and routes only qualified teams to a demo.</p>
+        <div class="hero-actions reveal in" data-d="3">
+          <a class="btn" href="#demo">Book a demo</a>
+          <button class="btn ghost" type="button" data-open-chat>Ask the product AI</button>
+        </div>
+        <div class="trust-tags reveal in" data-d="3">
+          <span class="tag">SSO &amp; roles</span>
+          <span class="tag">Audit log</span>
+          <span class="tag">Slack / Jira sync</span>
+          <span class="tag">EU data region</span>
+        </div>
+      </div>
+      <aside class="console reveal in" data-d="2" aria-label="Product preview">
+        <div class="console-bar">
+          <span class="d" aria-hidden="true"></span><span class="d" aria-hidden="true"></span><span class="d" aria-hidden="true"></span>
+          <span class="ttl">northstar — release board</span>
+        </div>
+        <div class="console-body">
+          <div class="crow"><span class="pill mint">On&nbsp;track</span><span class="name">Onboarding revamp</span><span class="owner" title="Owner">JD</span></div>
+          <div class="crow"><span class="pill warn">Blocked</span><span class="name">Billing migration</span><span class="owner" title="Owner">AK</span></div>
+          <div class="crow"><span class="pill peri">In&nbsp;review</span><span class="name">SSO rollout</span><span class="owner" title="Owner">MP</span></div>
+          <div class="ai-row">
+            <div class="q"><span class="k">Ask&nbsp;AI</span> Which blocker threatens Friday&rsquo;s release?</div>
+            <div class="a" id="aiAnswer"></div>
+          </div>
+          <div class="risk"><span>Release risk</span><b id="riskVal">—</b></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="strip" aria-label="Metrics">
+    <div class="wrap">
+      <div class="metric reveal"><strong>42%</strong><span>faster weekly planning</span></div>
+      <div class="metric reveal" data-d="1"><strong>18</strong><span>teams aligned</span></div>
+      <div class="metric reveal" data-d="2"><strong>9.4 ↓</strong><span>release risk score</span></div>
+      <div class="metric reveal" data-d="3"><strong>Live</strong><span>assistant Q&amp;A</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">Features</p>
+        <h2>Product clarity before the sales call.</h2>
+        <p>Fast to scan first, deeper answers on demand — the page and the assistant work together.</p>
+      </div>
+      <div class="cards">
+        <article class="card reveal">
+          <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5FE3B0" stroke-width="1.8"><path d="M4 6h16M4 12h10M4 18h13"/></svg></div>
+          <h3>Unified roadmap</h3>
+          <p>Priorities, owners, blockers, and decision status in one screen — no more status-meeting archaeology.</p>
+        </article>
+        <article class="card reveal" data-d="1">
+          <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8AA0FF" stroke-width="1.8"><path d="M21 15a4 4 0 0 1-4 4H8l-4 3V7a4 4 0 0 1 4-4h9a4 4 0 0 1 4 4z"/></svg></div>
+          <h3>AI product Q&amp;A</h3>
+          <p>Answers feature, integration, security, and pricing-process questions — and defers honestly when a human should confirm.</p>
+        </article>
+        <article class="card reveal" data-d="2">
+          <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5FE3B0" stroke-width="1.8"><path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 21l-4.9 2.6.9-5.5-4-3.9L9.5 8z"/></svg></div>
+          <h3>Qualified demo routing</h3>
+          <p>Only visitors with real team size, use case, and urgency are pushed to booking — the rest keep self-serving.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="integrations" aria-label="Integrations">
+    <div class="wrap inner">
+      <div class="sec-head reveal" style="margin-bottom:0">
+        <p class="eyebrow">Integrations</p>
+        <h2>Meets your stack where it already lives.</h2>
+      </div>
+      <div class="logo-grid reveal" data-d="1">
+        <span class="logo-cell"><span class="sq" style="background:#5FE3B0"></span>Slack</span>
+        <span class="logo-cell"><span class="sq" style="background:#8AA0FF"></span>Jira</span>
+        <span class="logo-cell"><span class="sq" style="background:#F2C265"></span>Linear</span>
+        <span class="logo-cell"><span class="sq" style="background:#5FE3B0"></span>GitHub</span>
+        <span class="logo-cell"><span class="sq" style="background:#8AA0FF"></span>Notion</span>
+        <span class="logo-cell"><span class="sq" style="background:#F2C265"></span>Figma</span>
+      </div>
+      <p class="reveal" data-d="2" style="margin:22px 0 0;font-size:13.5px">Demo marks — a production build connects to the client&rsquo;s real stack via API or webhooks.</p>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">How it works</p>
+        <h2>Live in a sprint, not a quarter.</h2>
+      </div>
+      <div class="steps">
+        <article class="step reveal">
+          <span class="num">01 · Day 1</span>
+          <h3>Connect the sources</h3>
+          <p>Import from Jira, Linear, or CSV. Owners and blockers map automatically; nothing is retyped.</p>
+        </article>
+        <article class="step reveal" data-d="1">
+          <span class="num">02 · Week 1</span>
+          <h3>Run one real release</h3>
+          <p>The board replaces the status meeting for a single release. Risk scoring calibrates on your actual data.</p>
+        </article>
+        <article class="step reveal" data-d="2">
+          <span class="num">03 · Week 2</span>
+          <h3>Decide from the console</h3>
+          <p>Ask the AI what threatens the date, reassign in place, and let the audit log remember why.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section proof" id="proof">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow reveal">What the assistant handles</p>
+        <h2 class="reveal" data-d="1">A SaaS page has to explain without flattening the product.</h2>
+        <p class="reveal" data-d="2">The interface preview, quantified claims, and assistant scripts pull in one direction: help a buyer decide whether it fits, then route them well. Below are the objections it answers first.</p>
+        <div class="sec-band reveal" data-d="2" style="grid-template-columns:1fr 1fr">
+          <span class="sec-cell"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5FE3B0" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>SSO &amp; role-based access</span>
+          <span class="sec-cell"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8AA0FF" stroke-width="1.8"><path d="M4 7h16v13H4zM8 7V4h8v3"/></svg>Full audit log</span>
+          <span class="sec-cell"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5FE3B0" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18"/></svg>EU / US data region</span>
+          <span class="sec-cell"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8AA0FF" stroke-width="1.8"><path d="M12 15v3M8 11V7a4 4 0 0 1 8 0v4M5 11h14v9H5z"/></svg>Encrypted at rest</span>
+        </div>
+      </div>
+      <div class="qa">
+        <div class="item reveal"><strong>“Does it integrate with our stack?”</strong><span>Slack alerts, Jira/Linear sync, CSV import out of the box; a real build connects to the client&rsquo;s tools.</span></div>
+        <div class="item reveal" data-d="1"><strong>“How is our data handled?”</strong><span>Data region, SSO, roles, and audit logs — detailed reviews are routed to a human, not improvised.</span></div>
+        <div class="item reveal" data-d="2"><strong>“What does it cost?”</strong><span>No invented numbers. The assistant qualifies plan fit and moves to a demo instead of guessing price.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Customer quote">
+    <div class="wrap">
+      <div class="quote-wrap reveal">
+        <blockquote>&ldquo;We cancelled the Monday status meeting after the first sprint. The board answers <em>what&rsquo;s blocked and why</em> before anyone has to ask.&rdquo;</blockquote>
+        <div class="q-who">
+          <span class="q-av" aria-hidden="true">SR</span>
+          <div class="q-meta"><b>Sasha R.</b><span>Head of Delivery · 120-person product org (fictional)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section demo" id="demo" style="padding-top:0">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow reveal">Demo</p>
+        <h2 class="reveal" data-d="1">Book a product demo.</h2>
+        <p class="reveal" data-d="2">Local demo form, no data is sent. In production: calendar, CRM, enrichment, and alerts to the sales channel.</p>
+        <div class="checklist reveal" data-d="2">
+          <span class="check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5FE3B0" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>20 minutes, your use case on screen — not a slide deck</span>
+          <span class="check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5FE3B0" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Pricing mapped to your team size on the call</span>
+          <span class="check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5FE3B0" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Security questionnaire answered by a human</span>
+        </div>
+      </div>
+      <form class="form reveal" data-d="1" id="lead">
+        <div>
+          <label for="l-email">Work email</label>
+          <input class="field" id="l-email" type="email" required placeholder="you@company.com" />
+        </div>
+        <div>
+          <label for="l-company">Company</label>
+          <input class="field" id="l-company" required placeholder="Company name" />
+        </div>
+        <div>
+          <label for="l-size">Team size</label>
+          <select class="field" id="l-size">
+            <option>10–50 employees</option>
+            <option>51–250 employees</option>
+            <option>250+ employees</option>
+          </select>
+        </div>
+        <button class="btn" type="submit">Request demo</button>
+        <p class="note" id="lead-note" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Northstar Ops — fictional demo product · design &amp; build by Andrey Volkov</span>
+    <a class="back" href="../../brand-site/index.html">← Back to portfolio</a>
+  </div>
+</footer>
+
+<button id="chatBtn" type="button" aria-label="Open the product assistant" data-open-chat>
+  <span class="av" aria-hidden="true">AI</span> Ask product AI
+</button>
+<section id="chat" role="dialog" aria-label="Product assistant" aria-modal="false">
+  <div class="chat-head">
+    <span class="av" aria-hidden="true">AI</span>
+    <div>
+      <div class="t">Product AI</div>
+      <div class="s"><span style="color:#5FE3B0">●</span> Online · Demo</div>
+    </div>
+    <button class="x" id="chatClose" type="button" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-demo-note">Scripted demo — no live AI. Client versions connect to a real LLM.</div>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <form class="chat-foot" id="chatForm">
+    <input id="chatInput" autocomplete="off" placeholder="Ask about integrations, security, pricing…" aria-label="Message" />
+    <button type="submit" aria-label="Send">→</button>
+  </form>
+</section>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* reveal on scroll */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll(".reveal:not(.in)").forEach(function(el){ io.observe(el); });
+
+  /* Signature: the console AI row answers, then risk score resolves */
+  var ans = document.getElementById("aiAnswer"), riskVal = document.getElementById("riskVal");
+  var answer = "Billing migration — blocked 3 days (owner AK). Reassign or cut from Friday scope.";
+  function resolveRisk(){ if(riskVal){ riskVal.textContent = "9.4 ↓"; } }
+  if(ans){
+    ans.innerHTML = '<span class="tag">answered</span><span class="txt"></span>';
+    var out = ans.querySelector(".txt");
+    if(reduce){ out.textContent = answer; resolveRisk(); }
+    else{
+      ans.classList.add("cursor");
+      var i = 0;
+      setTimeout(function type(){
+        out.textContent = answer.slice(0, i++);
+        if(i <= answer.length){ setTimeout(type, 26); }
+        else{ ans.classList.remove("cursor"); resolveRisk(); }
+      }, 700);
+    }
+  }
+
+  /* Chat */
+  var chat = document.getElementById("chat"),
+      log = document.getElementById("chatLog"),
+      input = document.getElementById("chatInput");
+  var greeted = false;
+
+  function scrollDown(){ log.scrollTop = log.scrollHeight; }
+  function push(text, who){
+    var b = document.createElement("div");
+    b.className = "bubble " + (who || "bot");
+    b.textContent = text; log.appendChild(b); scrollDown();
+  }
+  function chips(items){
+    if(!items || !items.length) return;
+    var row = document.createElement("div"); row.className = "chips";
+    items.forEach(function(c){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "chip"; btn.textContent = c;
+      btn.addEventListener("click", function(){ row.remove(); userSay(c); });
+      row.appendChild(btn);
+    });
+    log.appendChild(row); scrollDown();
+  }
+  function botSay(text, items){
+    var t = document.createElement("div"); t.className = "bubble bot"; t.textContent = "…";
+    log.appendChild(t); scrollDown();
+    setTimeout(function(){ t.remove(); push(text,"bot"); chips(items); }, reduce ? 160 : 560);
+  }
+  function openChat(){
+    chat.classList.add("open");
+    if(!greeted){
+      greeted = true;
+      botSay("Hi — I'm the Northstar product assistant. Heads up: this is a scripted demo, not live AI — client builds connect to a real LLM. I can explain features, integrations, security posture, or help decide if you should book a demo. What's on your mind?",
+        ["Integrations","Security","Pricing","Book a demo"]);
+    }
+    setTimeout(function(){ input.focus(); }, 60);
+  }
+  function closeChat(){ chat.classList.remove("open"); }
+  function userSay(text){ text=(text||"").trim(); if(!text) return; push(text,"user"); route(text); }
+
+  function route(text){
+    var t = text.toLowerCase();
+    if(/integrat|slack|jira|asana|linear|api|webhook|import|sync/.test(t))
+      return botSay("Out of the box: Slack alerts, Jira/Linear task sync, and CSV import. A real build would connect to your exact stack via API or webhook. Which tools would you need it to talk to?",
+        ["Security","Book a demo"]);
+    if(/security|soc|gdpr|data|privacy|sso|compliance|audit|region/.test(t))
+      return botSay("Security is handled carefully: EU/US data region, SSO, role-based access, and audit logs. For a detailed vendor review I'd route you to a human rather than improvise answers. Want me to line that up?",
+        ["Book a demo","Integrations"]);
+    if(/price|pricing|cost|expensive|budget|plan|quote/.test(t))
+      return botSay("I won't invent a number. Pricing depends on team size and use case — the honest next step is a short demo where we map it to your plan. Roughly how big is the team?",
+        ["10–50","51–250","250+","Book a demo"]);
+    if(/(10.50|50|51.250|250|team|small|large|enterprise|people|employees)/.test(t))
+      return botSay("Good — that helps size the fit. The fastest path is a 20-minute demo with your use case in front of us. Shall I set it up?",
+        ["Book a demo"]);
+    if(/(too expensive|not sure|already use|competitor|switch|why|objection|convince)/.test(t))
+      return botSay("Fair pushback. Most teams switch when status meetings and scattered trackers cost more than the tool. If it doesn't earn its place in the first sprint, it shouldn't stay. Want to test it against one real release?",
+        ["Book a demo","Integrations"]);
+    if(/demo|book|call|meeting|trial|start/.test(t))
+      return botSay("Great fit for a demo. I'd collect work email, company size, and use case, then hand it to the team. The form on the page does exactly that.",
+        ["Go to the form"]);
+    if(/hi|hello|hey|yo|sup/.test(t))
+      return botSay("Hey! I can cover features, integrations, security, pricing approach, or booking. Where should we start?",
+        ["Integrations","Security","Book a demo"]);
+    return botSay("I can answer feature, integration, security, and pricing-process questions, or handle an objection — then route you to a demo if it fits. What would help most?",
+      ["Integrations","Security","Pricing","Book a demo"]);
+  }
+
+  document.querySelectorAll("[data-open-chat]").forEach(function(b){ b.addEventListener("click", function(){ openChat(); }); });
+  document.getElementById("chatClose").addEventListener("click", closeChat);
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && chat.classList.contains("open")) closeChat(); });
+  document.getElementById("chatForm").addEventListener("submit", function(e){
+    e.preventDefault(); var v = input.value; input.value = ""; userSay(v);
+  });
+  document.getElementById("lead").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("lead-note").textContent = "Thanks — stored locally in this demo. In production this hits your CRM and calendar.";
+    this.reset();
+  });
+})();
+</script>
+</body>
+</html>

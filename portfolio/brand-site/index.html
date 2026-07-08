@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en" id="top" class="bg-page">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Andrey Volkov — AI Conversion Sites & Chatbots</title>
+<meta name="description" content="Proof-first portfolio: five live conversion-site demos with built-in AI assistant flows. Real estate, dental, solar, SaaS, hospitality. EN/DE delivery." />
+<meta name="theme-color" content="#0a0e1a" />
+<link rel="canonical" href="https://andreyvolkov.dev/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Andrey Volkov — AI Conversion Sites & Chatbots" />
+<meta property="og:description" content="Open the live work first: five conversion-site demos with AI chatbot flows." />
+<meta property="og:image" content="og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Andrey Volkov","jobTitle":"AI Conversion Site Developer","knowsLanguage":["English","German","Serbian"],"url":"https://andreyvolkov.dev"}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0e1a'/%3E%3Cpath d='M7 21l6-4 5 3 7-10' fill='none' stroke='%233b82f6' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ============ tokens ============ */
+:root{
+  --page:#0a0e1a;
+  --surface:#101728;
+  --surface-2:#151d31;
+  --ink:#e9edf6;
+  --muted:#8b96ad;
+  --line:rgba(233,237,246,.10);
+  --line-strong:rgba(233,237,246,.18);
+  --blue:#3b82f6;
+  --blue-soft:#7fa8ff;
+  --good:#34d399;
+  --radius:12px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:86px;background:var(--page)}
+body{margin:0;background:var(--page);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.55;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button,input,select,textarea{font:inherit}
+::selection{background:var(--blue);color:#fff}
+:focus-visible{outline:2px solid var(--blue-soft);outline-offset:2px}
+.wrap{width:min(1160px,calc(100% - 40px));margin:0 auto}
+.mono{font-family:"IBM Plex Mono",Consolas,monospace;letter-spacing:.1em;text-transform:uppercase}
+.display{font-family:"Space Grotesk",Inter,sans-serif;letter-spacing:-.02em}
+.muted{color:var(--muted)}
+.eyebrow{font-size:11px;color:var(--blue-soft);font-weight:600}
+h1,h2,h3{color:#f5f7fc;margin:0}
+h1{font-size:clamp(40px,5.4vw,72px);line-height:1.02}
+h2{font-size:clamp(28px,3.6vw,44px);line-height:1.08}
+h3{font-size:19px}
+p{margin:0}
+.skip{position:absolute;left:-9999px;top:0;background:var(--blue);color:#fff;padding:10px 16px;border-radius:0 0 8px 0;z-index:99}
+.skip:focus{left:0}
+
+/* buttons / chips */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:12px 18px;border-radius:8px;border:1px solid var(--line-strong);background:rgba(233,237,246,.05);color:var(--ink);font-size:12px;font-family:"IBM Plex Mono",Consolas,monospace;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;white-space:nowrap;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.btn:hover{background:rgba(233,237,246,.1);transform:translateY(-1px)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 16px 40px -18px var(--blue)}
+.btn.primary:hover{background:#4f8ffb}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:26px;padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(233,237,246,.05);font-size:11px;color:var(--muted)}
+.chip.live{border-color:rgba(52,211,153,.35);color:var(--good)}
+.chip.live:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--good)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+
+/* reveal */
+[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+[data-reveal].in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}}
+
+/* ============ nav ============ */
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;border-bottom:1px solid transparent;transition:background .35s ease,border-color .35s ease}
+.nav.solid{border-bottom-color:var(--line);background:rgba(10,14,26,.85);backdrop-filter:blur(14px)}
+.nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-family:"Space Grotesk",Inter,sans-serif}
+.mark{width:34px;height:34px;border-radius:8px;background:rgba(59,130,246,.14);border:1px solid rgba(59,130,246,.4);display:grid;place-items:center;color:var(--blue-soft)}
+.mark svg{width:20px}
+.nav-links{display:flex;align-items:center;gap:24px;font-size:14px;color:var(--muted)}
+.nav-links a:hover{color:var(--ink)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.lang{display:flex;border:1px solid var(--line-strong);border-radius:7px;overflow:hidden;background:rgba(233,237,246,.04)}
+.lang button{border:0;background:transparent;padding:8px 11px;cursor:pointer;font-size:11px;color:var(--muted)}
+.lang button[aria-pressed=true]{background:var(--blue);color:#fff}
+.menu{display:none}
+#mobileMenu{background:var(--surface);border-bottom:1px solid var(--line)}
+#mobileMenu a{display:block;padding:14px 0;color:var(--ink);border-bottom:1px solid var(--line)}
+
+/* ============ hero ============ */
+.hero{position:relative;padding:168px 0 96px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(90% 60% at 85% -10%,rgba(59,130,246,.16),transparent 60%),
+  radial-gradient(60% 50% at 0% 110%,rgba(59,130,246,.08),transparent 60%)}
+.hero:after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(233,237,246,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(233,237,246,.03) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(80% 70% at 50% 20%,#000,transparent)}
+.hero .wrap{position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.hero h1 .accent{color:var(--blue-soft)}
+.hero-copy{font-size:17px;max-width:520px;color:var(--muted);margin-top:22px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero-note{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px}
+
+/* demo deck — the signature element */
+.deck{border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden;box-shadow:0 60px 120px -60px rgba(0,0,0,.8)}
+.deck-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.deck-dots{display:flex;gap:6px}
+.deck-dots i{width:9px;height:9px;border-radius:50%;background:rgba(233,237,246,.14)}
+.deck-bar .mono{font-size:10px;color:var(--muted)}
+.deck-shot{position:relative;display:block;aspect-ratio:16/9.6;background:#080b14;overflow:hidden}
+.deck-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;opacity:0;transition:opacity .45s ease}
+.deck-shot img.on{opacity:1}
+.deck-open{position:absolute;right:12px;bottom:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;background:rgba(10,14,26,.72);border:1px solid var(--line-strong);color:#fff;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(6px)}
+.deck-open:hover{background:var(--blue);border-color:var(--blue)}
+.deck-tabs{display:grid;grid-template-columns:repeat(5,1fr)}
+.deck-tabs button{border:0;border-top:1px solid var(--line);border-right:1px solid var(--line);background:transparent;color:var(--muted);padding:12px 6px;font-size:11px;font-family:"IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:color .2s ease,background .2s ease}
+.deck-tabs button:last-child{border-right:0}
+.deck-tabs button[aria-selected=true]{color:#fff;background:rgba(59,130,246,.16);box-shadow:inset 0 2px 0 var(--blue)}
+.deck-tabs button:hover{color:var(--ink)}
+
+/* ============ marquee ============ */
+.marquee{overflow:hidden;border-block:1px solid var(--line);background:rgba(233,237,246,.02)}
+.marquee-track{display:flex;width:max-content;animation:marquee 40s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee span{white-space:nowrap;padding:14px 0;font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.marquee b{color:var(--blue-soft);font-weight:500}
+.marquee i{margin:0 22px;color:rgba(233,237,246,.22);font-style:normal}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.marquee-track{animation:none}}
+
+/* ============ sections ============ */
+.section{padding:96px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:40px}
+.section-head p{max-width:400px;color:var(--muted)}
+
+/* work */
+.feature{display:grid;grid-template-columns:1.25fr .75fr;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);margin-bottom:22px;transition:border-color .3s ease}
+.feature:hover{border-color:rgba(59,130,246,.45)}
+.feature-shot{position:relative;min-height:340px;background:#080b14;overflow:hidden}
+.feature-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.feature:hover .feature-shot img{transform:scale(1.04)}
+.feature-body{padding:32px;display:flex;flex-direction:column;gap:16px}
+.feature-body .work-meta{display:flex;gap:8px;flex-wrap:wrap}
+.proof-lines{display:grid;gap:9px;margin-top:2px}
+.proof-lines div{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#c3cbdc}
+.proof-lines b{color:var(--blue-soft);font-weight:500}
+.card-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:8px}
+.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.work-card{overflow:hidden;display:flex;flex-direction:column;transition:transform .3s cubic-bezier(.22,1,.36,1),border-color .3s ease}
+.work-card:hover{transform:translateY(-5px);border-color:rgba(59,130,246,.45)}
+.work-card .visual{position:relative;display:block;aspect-ratio:16/8.4;background:#080b14;overflow:hidden}
+.work-card .visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.work-card:hover .visual img{transform:scale(1.05)}
+.work-body{padding:24px;display:flex;flex-direction:column;gap:13px;flex:1}
+.work-meta{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.work-body>p{color:var(--muted);font-size:14px}
+
+/* proof strip */
+.proof-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.proof-item{padding:22px;border-radius:var(--radius);border:1px solid var(--line);background:var(--surface)}
+.proof-item strong{display:block;margin-bottom:6px;font-family:"Space Grotesk",Inter,sans-serif}
+.proof-item span{color:var(--muted);font-size:14px}
+
+/* services */
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.service{padding:28px;display:flex;flex-direction:column;gap:10px}
+.service.hot{border-color:rgba(59,130,246,.5);background:linear-gradient(180deg,rgba(59,130,246,.09),var(--surface) 55%)}
+.service .num{font-size:11px}
+.service p{color:var(--muted);font-size:14px}
+.service ul{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:14px;display:grid;gap:4px}
+
+/* process */
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.process{padding:24px;position:relative}
+.process .num{font-size:13px;color:var(--blue-soft)}
+.process h3{margin:10px 0 6px}
+.process p{color:var(--muted);font-size:14px}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:.62fr 1.38fr;gap:24px;align-items:stretch}
+.monogram{border-radius:16px;border:1px solid var(--line);background:linear-gradient(150deg,rgba(59,130,246,.14),var(--surface) 60%);display:grid;place-items:center;padding:36px;text-align:center}
+.monogram .initials{font-family:"Space Grotesk",Inter,sans-serif;font-size:72px;font-weight:700;color:var(--blue-soft);line-height:1}
+.monogram .role{margin-top:12px;font-size:12px}
+.profile-card{padding:30px}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+.fact{padding:14px;border-radius:9px;background:var(--surface-2);border:1px solid var(--line);font-size:14px}
+.fact strong{font-family:"Space Grotesk",Inter,sans-serif}
+.fact span{color:var(--muted)}
+
+/* contact */
+.contact{border-top:1px solid var(--line);background:linear-gradient(180deg,var(--page),#0c1224)}
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:32px}
+.contact p{color:var(--muted)}
+.form{padding:26px;display:grid;gap:12px}
+.form label{font-size:11px;color:var(--muted)}
+.field{width:100%;border:1px solid var(--line-strong);background:rgba(233,237,246,.05);color:var(--ink);border-radius:8px;padding:12px}
+.field::placeholder{color:rgba(139,150,173,.7)}
+.field:focus{border-color:var(--blue)}
+
+.footer{padding:34px 0;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* ============ chat ============ */
+#chatButton{position:fixed;right:20px;bottom:20px;z-index:60;width:56px;height:56px;border:0;border-radius:50%;background:var(--blue);color:#fff;box-shadow:0 18px 42px -18px var(--blue);cursor:pointer;display:grid;place-items:center}
+#chat{position:fixed;right:20px;bottom:88px;z-index:61;width:min(380px,calc(100vw - 32px));max-height:min(600px,calc(100dvh - 116px));display:none;flex-direction:column;background:var(--surface);border:1px solid var(--line-strong);border-radius:14px;box-shadow:0 28px 80px -40px #000;overflow:hidden}
+#chat.open{display:flex}
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+.chat-head strong{font-family:"Space Grotesk",Inter,sans-serif}
+.chat-demo-badge{display:block;margin:0;padding:7px 15px;font-size:11px;color:var(--muted);background:rgba(59,130,246,.08);border-bottom:1px solid var(--line)}
+.chat-log{padding:14px;display:flex;flex-direction:column;gap:9px;overflow:auto;min-height:200px}
+.bubble{max-width:86%;padding:10px 13px;border-radius:12px;font-size:14px;line-height:1.45}
+.bot{align-self:flex-start;background:var(--surface-2);border:1px solid var(--line)}
+.user{align-self:flex-end;background:var(--blue);color:#fff}
+.chat-input{display:flex;gap:8px;border-top:1px solid var(--line);padding:10px}
+.chat-input input{flex:1;border:1px solid var(--line-strong);background:rgba(233,237,246,.05);color:var(--ink);border-radius:999px;padding:10px 14px}
+.chat-input button{border:0;border-radius:999px;padding:0 16px;background:var(--blue);color:#fff;cursor:pointer}
+.chat-close{min-height:32px;padding:6px 10px}
+
+/* ============ responsive ============ */
+.mobile-only{display:none}
+@media(max-width:960px){
+  .nav-links,.nav-actions .btn{display:none}
+  .nav-actions .btn.menu{display:grid;place-items:center}
+  .mobile-only{display:block}
+  .hero{padding-top:130px}
+  .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}
+  .feature{grid-template-columns:1fr}
+  .feature-shot{min-height:230px}
+  .work-grid{grid-template-columns:1fr}
+  .proof-strip,.process-grid{grid-template-columns:repeat(2,1fr)}
+  .service-grid{grid-template-columns:1fr}
+  .section-head{display:block}
+  .section-head p{margin-top:10px}
+  #chatButton{right:14px;bottom:14px}
+  #chat{right:12px;bottom:80px}
+}
+@media(max-width:520px){
+  .wrap{width:calc(100% - 28px)}
+  .proof-strip,.process-grid,.facts{grid-template-columns:1fr}
+  .hero-actions .btn,.card-actions .btn{width:100%}
+  .deck-tabs{grid-template-columns:repeat(5,1fr)}
+  .deck-tabs button{font-size:9px;padding:10px 2px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Andrey Volkov — home">
+      <span class="mark"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21l6-4 5 3 7-10"/></svg></span>
+      Andrey Volkov
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#process" data-i18n="nav.process">Process</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="de" aria-pressed="false">DE</button>
+      </div>
+      <a class="btn primary" href="#contact" data-i18n="nav.cta">Get in touch</a>
+      <button class="btn menu" id="menuButton" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="wrap mobile-only" id="mobileMenu" hidden>
+    <a href="#work" data-i18n="nav.work">Work</a>
+    <a href="#services" data-i18n="nav.services">Services</a>
+    <a href="#process" data-i18n="nav.process">Process</a>
+    <a href="#about" data-i18n="nav.about">About</a>
+    <a href="#contact" data-i18n="nav.cta">Get in touch</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow mono" data-i18n="hero.kicker">Proof-of-work portfolio</div>
+          <h1 class="display" style="margin-top:16px" data-i18n="hero.title">Don&apos;t take my word for it. <span class="accent">Open the work.</span></h1>
+          <p class="hero-copy" data-i18n="hero.copy">I design and build conversion landing pages with built-in AI assistant flows. Five live demos, five different industries, five different visual systems — inspect everything before we talk.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#work" data-i18n="hero.cta1">See the live demos</a>
+            <button class="btn" type="button" data-open-chat data-i18n="hero.cta2">Try the assistant</button>
+          </div>
+          <div class="hero-note">
+            <span class="chip" data-i18n="hero.p1">5 industry demos</span>
+            <span class="chip" data-i18n="hero.p2">EN / DE delivery</span>
+            <span class="chip" data-i18n="hero.p3">Chatbot flows included</span>
+          </div>
+        </div>
+        <div class="deck" id="deck" data-reveal>
+          <div class="deck-bar">
+            <div class="deck-dots"><i></i><i></i><i></i></div>
+            <span class="mono" id="deckLabel">demos / 01–05</span>
+          </div>
+          <a class="deck-shot" id="deckShot" href="#" target="_blank" rel="noopener" aria-label="Open demo">
+            <span class="deck-open" data-i18n="deck.open">Open demo &#8599;</span>
+          </a>
+          <div class="deck-tabs" role="tablist" aria-label="Demo previews" id="deckTabs"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack">
+      <span><b>Real estate</b><i>/</i>Dental clinics<i>/</i><b>Solar &amp; energy</b><i>/</i>B2B SaaS<i>/</i><b>Hospitality</b><i>/</i>Landing pages<i>/</i><b>AI assistants</b><i>/</i>Lead qualification<i>/</i><b>EN + DE</b><i>/</i></span>
+    </div>
+  </div>
+
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <div class="eyebrow mono" data-i18n="work.kicker">Live work</div>
+          <h2 class="display" data-i18n="work.title">Five demos. Zero recycled templates.</h2>
+        </div>
+        <p data-i18n="work.copy">Each demo has its own industry, visual language, and assistant job. The point is not to claim quality — it&apos;s to make it inspectable.</p>
+      </div>
+      <div id="featureSlot"></div>
+      <div class="work-grid" id="workGrid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="proof" style="padding-top:0">
+    <div class="wrap">
+      <div class="proof-strip">
+        <div class="proof-item" data-reveal><strong data-i18n="proof.a.t">Craft</strong><span data-i18n="proof.a.d">Five distinct designs, not one recolored template.</span></div>
+        <div class="proof-item" data-reveal><strong data-i18n="proof.b.t">AI built in</strong><span data-i18n="proof.b.d">Every demo ships with a visible assistant flow, not a bolted-on widget.</span></div>
+        <div class="proof-item" data-reveal><strong data-i18n="proof.c.t">DACH-ready</strong><span data-i18n="proof.c.d">German-first dental and solar demos show real market fit, not machine translation.</span></div>
+        <div class="proof-item" data-reveal><strong data-i18n="proof.d.t">Clear scope</strong><span data-i18n="proof.d.d">Defined timeline, revision policy, and honest labelling of what&apos;s demo vs. production.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services" style="border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <div class="eyebrow mono" data-i18n="services.kicker">Offer</div>
+          <h2 class="display" data-i18n="services.title">What I build for clients.</h2>
+        </div>
+        <p data-i18n="services.copy">No public price list — the page should help you decide whether the style, thinking, and scope fit before asking for a quote.</p>
+      </div>
+      <div class="service-grid">
+        <article class="card service" data-reveal>
+          <div class="mono eyebrow num">01</div>
+          <h3 data-i18n="svc1.t">Conversion landing page</h3>
+          <p data-i18n="svc1.d">A custom one-page site focused on a single action: book, enquire, reserve, apply, or request a call.</p>
+          <ul><li data-i18n="svc1.i1">Copy structure included</li><li data-i18n="svc1.i2">Responsive build</li><li data-i18n="svc1.i3">Analytics-ready</li></ul>
+        </article>
+        <article class="card service hot" data-reveal>
+          <div class="mono eyebrow num">02 — <span data-i18n="svc2.tag">most requested</span></div>
+          <h3 data-i18n="svc2.t">Landing + AI chatbot</h3>
+          <p data-i18n="svc2.d">A conversion page plus an assistant that answers questions, qualifies leads, and captures contact details.</p>
+          <ul><li data-i18n="svc2.i1">Scripted flow or LLM backend</li><li data-i18n="svc2.i2">Lead capture in chat</li><li data-i18n="svc2.i3">CRM/webhook-ready</li></ul>
+        </article>
+        <article class="card service" data-reveal>
+          <div class="mono eyebrow num">03</div>
+          <h3 data-i18n="svc3.t">Funnel + automation</h3>
+          <p data-i18n="svc3.d">Multi-page funnel, lead routing, notifications, and self-hosted analytics when one page isn&apos;t enough.</p>
+          <ul><li data-i18n="svc3.i1">Lead routing</li><li data-i18n="svc3.i2">Telegram/email alerts</li><li data-i18n="svc3.i3">EU VPS-ready</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="process">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <div>
+          <div class="eyebrow mono" data-i18n="process.kicker">Process</div>
+          <h2 class="display" data-i18n="process.title">Simple enough to trust, specific enough to plan.</h2>
+        </div>
+      </div>
+      <div class="process-grid">
+        <div class="card process" data-reveal><div class="mono num">Step 01</div><h3 data-i18n="p1.t">Discovery</h3><p data-i18n="p1.d">Goal, audience, proof, primary action, and the chatbot&apos;s job.</p></div>
+        <div class="card process" data-reveal><div class="mono num">Step 02</div><h3 data-i18n="p2.t">Direction</h3><p data-i18n="p2.d">First preview in 3–5 days with the visual system and page logic.</p></div>
+        <div class="card process" data-reveal><div class="mono num">Step 03</div><h3 data-i18n="p3.t">Build</h3><p data-i18n="p3.d">Responsive page, assistant flow, contact capture, metadata.</p></div>
+        <div class="card process" data-reveal><div class="mono num">Step 04</div><h3 data-i18n="p4.t">Launch</h3><p data-i18n="p4.d">Deploy, test on real devices, iterate. Two revision rounds included.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about" style="border-top:1px solid var(--line)">
+    <div class="wrap about-grid">
+      <div class="monogram" data-reveal>
+        <div>
+          <div class="initials" aria-hidden="true">AV</div>
+          <div class="role mono muted" data-i18n="about.role">AI conversion site developer</div>
+        </div>
+      </div>
+      <div class="card profile-card" data-reveal>
+        <div class="eyebrow mono" data-i18n="about.kicker">About</div>
+        <h2 class="display" style="margin-top:10px" data-i18n="about.title">Remote developer for conversion sites with AI flows.</h2>
+        <p class="muted" style="margin-top:12px" data-i18n="about.copy">I work with small businesses and founders who need a page that sells and an assistant that qualifies — delivered in English or German, with clear scope and no surprises.</p>
+        <div class="facts">
+          <div class="fact"><strong data-i18n="about.f1.t">Languages</strong><br><span data-i18n="about.f1.d">EN / DE / SR</span></div>
+          <div class="fact"><strong data-i18n="about.f2.t">Stack</strong><br><span>HTML, CSS, JS, LLM APIs, webhooks</span></div>
+          <div class="fact"><strong data-i18n="about.f3.t">First preview</strong><br><span data-i18n="about.f3.d">In 3–5 days</span></div>
+          <div class="fact"><strong data-i18n="about.f4.t">Revisions</strong><br><span data-i18n="about.f4.d">2 rounds included by default</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact" id="contact">
+    <div class="wrap contact-grid">
+      <div data-reveal>
+        <div class="eyebrow mono" data-i18n="contact.kicker">Next step</div>
+        <h2 class="display" style="margin-top:10px" data-i18n="contact.title">Continue where you found me.</h2>
+        <p style="margin-top:14px" data-i18n="contact.copy">If you arrived from a freelance platform, the safest path is simple: inspect the demos here, then continue the conversation or order on the platform.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#contact" data-profile-link="upwork">Upwork</a>
+          <a class="btn" href="#contact" data-profile-link="fiverr">Fiverr</a>
+          <a class="btn" href="#contact" data-profile-link="telegram">Telegram</a>
+        </div>
+      </div>
+      <form class="card form" id="leadForm" data-reveal>
+        <label for="name" data-i18n="form.name">Name</label>
+        <input class="field" id="name" required placeholder="Your name" />
+        <label for="email" data-i18n="form.email">Email or Telegram</label>
+        <input class="field" id="email" required placeholder="you@email.com or @handle" />
+        <label for="project" data-i18n="form.project">What do you need?</label>
+        <textarea class="field" id="project" rows="4" placeholder="Landing page, chatbot, niche, deadline..."></textarea>
+        <button class="btn primary" type="submit" data-i18n="form.submit">Send brief</button>
+        <p class="muted" id="formNote" style="font-size:13px" data-i18n="form.note">Demo form — shows the lead-capture UX. On a client project this connects to email, Telegram, or a CRM.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span data-i18n="footer.by">Designed and built by Andrey Volkov</span>
+    <span class="mono" style="font-size:11px">EN / DE — remote</span>
+  </div>
+</footer>
+
+<button id="chatButton" type="button" aria-label="Open portfolio assistant" data-open-chat>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12a8 8 0 0 1-11.5 7.2L3 21l1.8-6.5A8 8 0 1 1 21 12z"/></svg>
+</button>
+<section id="chat" role="dialog" aria-label="Portfolio assistant">
+  <div class="chat-head">
+    <strong data-i18n="chat.title">Portfolio assistant</strong>
+    <button class="btn chat-close" type="button" id="chatClose" data-i18n="chat.close">Close</button>
+  </div>
+  <p class="chat-demo-badge mono" data-i18n="chat.badge">Scripted demo — no live AI. Client versions connect to a real LLM.</p>
+  <div class="chat-log" id="chatLog"></div>
+  <form class="chat-input" id="chatForm">
+    <input id="chatInput" autocomplete="off" placeholder="Ask about demos, timeline, languages..." aria-label="Message" />
+    <button type="submit" data-i18n="chat.send">Send</button>
+  </form>
+</section>
+
+<script>
+(function(){
+  "use strict";
+  var PROFILE = { upwork:"", fiverr:"", telegram:"", email:"" };
+  function $(s,root){return (root||document).querySelector(s)}
+  function $all(s,root){return Array.prototype.slice.call((root||document).querySelectorAll(s))}
+  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+
+  /* ---------- cases ---------- */
+  var cases = [
+    {id:"nur",href:"../demos/dubai-real-estate/index.html",shot:"shots/nur.jpeg",tab:"Estate",
+      en:{title:"NUR Private Residences",tag:"Luxury real estate",proof:["Premium visual system built from scratch","AI concierge: buyer matching + Golden Visa Q&A","Lead capture directly inside the chat"]},
+      de:{title:"NUR Private Residences",tag:"Luxus-Immobilien",proof:["Eigenständiges Premium-Designsystem","KI-Concierge: Käufer-Matching + Golden Visa","Lead-Erfassung direkt im Chat"]}},
+    {id:"dental",href:"../demos/clinic-de/index.html",shot:"shots/clinic.jpeg",tab:"Dental",
+      en:{title:"Mitte Dental Practice",tag:"Dental clinic · DE",proof:["German-first trust copy","Appointment triage chatbot","Insurance & opening-hours answers"]},
+      de:{title:"Zahnarztpraxis Mitte",tag:"Zahnarztpraxis · DE",proof:["Vertrauensvolle Texte auf Deutsch","Termin-Triage per Chatbot","Antworten zu Kasse & Öffnungszeiten"]}},
+    {id:"solar",href:"../demos/solar-de/index.html",shot:"shots/solar.jpeg",tab:"Solar",
+      en:{title:"SonnenWerk Solar",tag:"Solar · DE",proof:["Roof qualification flow","Savings-estimate conversation","Consultation booking CTA"]},
+      de:{title:"SonnenWerk",tag:"Photovoltaik · DE",proof:["Dach-Eignungsprüfung","Dialog zur Ersteinschätzung","CTA für Beratungstermin"]}},
+    {id:"saas",href:"../demos/saas/index.html",shot:"shots/saas.jpeg",tab:"SaaS",
+      en:{title:"Northstar Ops",tag:"B2B SaaS",proof:["Live decision console","Feature & objection Q&A","Book-a-demo routing"]},
+      de:{title:"Northstar Ops",tag:"B2B SaaS",proof:["Live-Decision-Console","Feature- & Einwand-Fragen","Routing zur Demo-Buchung"]}},
+    {id:"restaurant",href:"../demos/restaurant/index.html",shot:"shots/restaurant.jpeg",tab:"Dining",
+      en:{title:"Luma Table",tag:"Fine dining",proof:["Candlelit editorial design","Reservation flow","Dietary & menu questions"]},
+      de:{title:"Luma Table",tag:"Gehobene Küche",proof:["Editorial-Design bei Kerzenlicht","Reservierungs-Flow","Menü- & Allergiefragen"]}}
+  ];
+  var caseUI = {
+    en:{open:"Open demo",ask:"Ask about it",live:"Live",featured:"Featured case"},
+    de:{open:"Demo öffnen",ask:"Dazu fragen",live:"Live",featured:"Highlight-Case"}
+  };
+  var currentLang = "en";
+  function caseText(c){ return c[currentLang] || c.en; }
+  function ui(){ return caseUI[currentLang] || caseUI.en; }
+
+  function featureCard(c){
+    var t = caseText(c), u = ui();
+    return '<article class="feature" data-reveal>'+
+      '<a class="feature-shot" href="'+c.href+'" target="_blank" rel="noopener" aria-label="'+esc(t.title)+'"><img src="'+c.shot+'" alt="'+esc(t.title)+'" loading="lazy"></a>'+
+      '<div class="feature-body">'+
+        '<div class="work-meta"><span class="chip">'+esc(u.featured)+'</span><span class="chip">'+esc(t.tag)+'</span><span class="chip live">'+esc(u.live)+'</span></div>'+
+        '<h3 class="display" style="font-size:26px">'+esc(t.title)+'</h3>'+
+        '<div class="proof-lines">'+t.proof.map(function(p){return '<div><b>&#8599;</b><span>'+esc(p)+'</span></div>'}).join("")+'</div>'+
+        '<div class="card-actions"><a class="btn primary" href="'+c.href+'" target="_blank" rel="noopener">'+esc(u.open)+'</a><button class="btn" type="button" data-chat-topic="'+esc(c.id)+'">'+esc(u.ask)+'</button></div>'+
+      '</div></article>';
+  }
+  function workCard(c){
+    var t = caseText(c), u = ui();
+    return '<article class="card work-card" data-reveal>'+
+      '<a class="visual" href="'+c.href+'" target="_blank" rel="noopener" aria-label="'+esc(t.title)+'"><img src="'+c.shot+'" alt="'+esc(t.title)+'" loading="lazy"></a>'+
+      '<div class="work-body">'+
+        '<div class="work-meta"><span class="chip">'+esc(t.tag)+'</span><span class="chip live">'+esc(u.live)+'</span></div>'+
+        '<h3>'+esc(t.title)+'</h3>'+
+        '<p>'+esc(t.proof[0])+' · '+esc(t.proof[1])+'.</p>'+
+        '<div class="card-actions"><a class="btn" href="'+c.href+'" target="_blank" rel="noopener">'+esc(u.open)+'</a><button class="btn" type="button" data-chat-topic="'+esc(c.id)+'">'+esc(u.ask)+'</button></div>'+
+      '</div></article>';
+  }
+  function renderCases(){
+    $("#featureSlot").innerHTML = featureCard(cases[0]);
+    $("#workGrid").innerHTML = cases.slice(1).map(workCard).join("");
+    observeReveals();
+  }
+
+  /* ---------- hero demo deck ---------- */
+  var deckIndex = 0, deckTimer = null;
+  function buildDeck(){
+    var shot = $("#deckShot");
+    cases.forEach(function(c,i){
+      var img = document.createElement("img");
+      img.src = c.shot; img.alt = ""; img.loading = i===0 ? "eager" : "lazy";
+      img.dataset.idx = String(i);
+      shot.insertBefore(img, shot.firstChild);
+    });
+    $("#deckTabs").innerHTML = cases.map(function(c,i){
+      return '<button type="button" role="tab" aria-selected="'+(i===0)+'" data-deck="'+i+'">'+esc(c.tab)+'</button>';
+    }).join("");
+    setDeck(0);
+    $all("[data-deck]").forEach(function(b){
+      b.addEventListener("click",function(){ setDeck(parseInt(b.dataset.deck,10)); restartDeckTimer(); });
+    });
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    if(!reduce) restartDeckTimer();
+    $("#deck").addEventListener("mouseenter",function(){ if(deckTimer){clearInterval(deckTimer);deckTimer=null;} });
+    $("#deck").addEventListener("mouseleave",function(){ if(!reduce) restartDeckTimer(); });
+  }
+  function setDeck(i){
+    deckIndex = i;
+    var c = cases[i];
+    $all("#deckShot img").forEach(function(img){ img.classList.toggle("on", img.dataset.idx === String(i)); });
+    $all("[data-deck]").forEach(function(b){ b.setAttribute("aria-selected", String(parseInt(b.dataset.deck,10)===i)); });
+    var shot = $("#deckShot");
+    shot.href = c.href;
+    shot.setAttribute("aria-label", caseText(c).title);
+    $("#deckLabel").textContent = "demos / 0"+(i+1)+"–05 · "+caseText(c).title;
+  }
+  function restartDeckTimer(){
+    if(deckTimer) clearInterval(deckTimer);
+    deckTimer = setInterval(function(){ setDeck((deckIndex+1)%cases.length); }, 4200);
+  }
+  buildDeck();
+
+  /* ---------- marquee duplication ---------- */
+  var track = $("#marqueeTrack");
+  track.innerHTML += track.innerHTML;
+
+  /* ---------- profile links ---------- */
+  function profileHref(key){
+    var raw = PROFILE[key] || "";
+    if(!raw) return "#contact";
+    if(key === "telegram") return "https://t.me/" + raw.replace(/^@/,"");
+    if(key === "email") return "mailto:" + raw;
+    return raw;
+  }
+  $all("[data-profile-link]").forEach(function(a){
+    var key = a.getAttribute("data-profile-link");
+    a.href = profileHref(key);
+    if(a.href.indexOf("#contact") === -1 && key !== "email"){a.target="_blank";a.rel="noopener"}
+  });
+
+  /* ---------- i18n ---------- */
+  var dict = {
+    en:{},
+    de:{
+      "nav.work":"Arbeiten","nav.services":"Leistungen","nav.process":"Prozess","nav.about":"Profil","nav.cta":"Kontakt",
+      "hero.kicker":"Proof-of-Work Portfolio",
+      "hero.title":"Kein Versprechen. <span class='accent'>Einfach die Arbeit öffnen.</span>",
+      "hero.copy":"Ich entwerfe und baue Conversion-Landingpages mit eingebauten KI-Assistenten. Fünf Live-Demos, fünf Branchen, fünf eigenständige Designsysteme — alles prüfbar, bevor wir sprechen.",
+      "hero.cta1":"Live-Demos ansehen","hero.cta2":"Assistant testen",
+      "hero.p1":"5 Branchen-Demos","hero.p2":"EN / DE Umsetzung","hero.p3":"Chatbot-Flows inklusive",
+      "deck.open":"Demo öffnen &#8599;",
+      "work.kicker":"Live-Arbeiten","work.title":"Fünf Demos. Kein recyceltes Template.",
+      "work.copy":"Jede Demo hat eigene Branche, visuelle Sprache und Assistant-Aufgabe. Es geht nicht darum, Qualität zu behaupten — sondern sie prüfbar zu machen.",
+      "proof.a.t":"Handwerk","proof.a.d":"Fünf eigenständige Designs — kein umgefärbtes Template.",
+      "proof.b.t":"KI eingebaut","proof.b.d":"Jede Demo hat einen sichtbaren Assistant-Flow, kein angeschraubtes Widget.",
+      "proof.c.t":"DACH-ready","proof.c.d":"Deutsch-first Dental- und Solar-Demos zeigen echten Marktfit, keine Maschinenübersetzung.",
+      "proof.d.t":"Klarer Umfang","proof.d.d":"Definierter Zeitplan, Revisionsregeln und ehrliche Kennzeichnung von Demo vs. Produktion.",
+      "services.kicker":"Angebot","services.title":"Was ich für Kunden baue.",
+      "services.copy":"Keine öffentliche Preisliste — die Seite soll helfen zu entscheiden, ob Stil, Denken und Umfang passen, bevor ein Angebot angefragt wird.",
+      "svc1.t":"Conversion-Landingpage","svc1.d":"Individuelle One-Page-Seite für eine Aktion: buchen, anfragen, reservieren, bewerben oder Call anfordern.","svc1.i1":"Copy-Struktur inklusive","svc1.i2":"Responsive Umsetzung","svc1.i3":"Analytics-ready",
+      "svc2.tag":"am meisten gefragt","svc2.t":"Landing + KI-Chatbot","svc2.d":"Conversion-Seite plus Assistent, der Fragen beantwortet, Leads qualifiziert und Kontaktdaten erfasst.","svc2.i1":"Scripted Flow oder LLM-Backend","svc2.i2":"Lead-Erfassung im Chat","svc2.i3":"CRM/Webhook-ready",
+      "svc3.t":"Funnel + Automatisierung","svc3.d":"Mehrseitiger Funnel, Lead-Routing, Benachrichtigungen und selbst gehostete Analytics, wenn eine Seite nicht reicht.","svc3.i1":"Lead-Routing","svc3.i2":"Telegram/E-Mail Alerts","svc3.i3":"EU-VPS-ready",
+      "process.kicker":"Prozess","process.title":"Einfach genug für Vertrauen, konkret genug für Planung.",
+      "p1.t":"Discovery","p1.d":"Ziel, Zielgruppe, Belege, Hauptaktion und die Aufgabe des Chatbots.",
+      "p2.t":"Richtung","p2.d":"Erste Vorschau in 3–5 Tagen mit Visual System und Seitenlogik.",
+      "p3.t":"Build","p3.d":"Responsive Seite, Assistant-Flow, Kontaktaufnahme, Metadaten.",
+      "p4.t":"Launch","p4.d":"Deploy, Test auf echten Geräten, Iteration. Zwei Korrekturrunden inklusive.",
+      "about.role":"Entwickler für KI-Conversion-Websites","about.kicker":"Profil",
+      "about.title":"Remote-Entwickler für Conversion-Seiten mit KI-Flows.",
+      "about.copy":"Ich arbeite mit kleinen Unternehmen und Gründern, die eine Seite brauchen, die verkauft — und einen Assistenten, der qualifiziert. Auf Englisch oder Deutsch, mit klarem Umfang und ohne Überraschungen.",
+      "about.f1.t":"Sprachen","about.f1.d":"EN / DE / SR","about.f2.t":"Stack","about.f3.t":"Erste Vorschau","about.f3.d":"In 3–5 Tagen","about.f4.t":"Revisionen","about.f4.d":"2 Runden standardmäßig inklusive",
+      "contact.kicker":"Nächster Schritt","contact.title":"Dort fortfahren, wo du mich gefunden hast.",
+      "contact.copy":"Wer über eine Freelance-Plattform kommt: Demos hier prüfen, dann Gespräch oder Auftrag auf der Plattform fortsetzen.",
+      "form.name":"Name","form.email":"E-Mail oder Telegram","form.project":"Was brauchst du?","form.submit":"Briefing senden",
+      "form.note":"Demo-Formular — zeigt die Lead-Capture-UX. Im Kundenprojekt wird es mit E-Mail, Telegram oder CRM verbunden.",
+      "footer.by":"Design und Umsetzung: Andrey Volkov",
+      "chat.title":"Portfolio-Assistent","chat.close":"Schließen","chat.send":"Senden",
+      "chat.badge":"Scripted Demo — keine echte KI. Kundenversionen nutzen ein echtes LLM."
+    }
+  };
+  function setLang(lang){
+    currentLang = lang === "de" ? "de" : "en";
+    document.documentElement.lang = currentLang;
+    $all("[data-lang]").forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-lang")===currentLang))});
+    $all("[data-i18n]").forEach(function(el){
+      var key = el.getAttribute("data-i18n");
+      if(!el.dataset.enText) el.dataset.enText = el.innerHTML;
+      if(currentLang === "en"){ el.innerHTML = el.dataset.enText; }
+      else if(dict.de[key]){ el.innerHTML = dict.de[key]; }
+    });
+    renderCases();
+    setDeck(deckIndex);
+  }
+  $all("[data-i18n]").forEach(function(el){el.dataset.enText = el.innerHTML});
+  $all("[data-lang]").forEach(function(b){b.addEventListener("click",function(){setLang(b.getAttribute("data-lang"))})});
+
+  /* ---------- mobile menu ---------- */
+  $("#menuButton").addEventListener("click",function(){
+    var m = $("#mobileMenu");
+    var open = m.hasAttribute("hidden");
+    if(open){ m.removeAttribute("hidden"); $("#nav").classList.add("solid"); }
+    else { m.setAttribute("hidden",""); if(window.scrollY<=46) $("#nav").classList.remove("solid"); }
+    this.setAttribute("aria-expanded",String(open));
+  });
+  $all("#mobileMenu a").forEach(function(a){a.addEventListener("click",function(){$("#mobileMenu").setAttribute("hidden","");$("#menuButton").setAttribute("aria-expanded","false")})});
+
+  /* ---------- nav solid on scroll ---------- */
+  function onScroll(){ $("#nav").classList.toggle("solid", window.scrollY > 46); }
+  onScroll();
+  window.addEventListener("scroll", onScroll, {passive:true});
+
+  /* ---------- reveal on scroll ---------- */
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  var io = null;
+  if("IntersectionObserver" in window && !reduceMotion){
+    io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } });
+    },{threshold:.1,rootMargin:"0px 0px -6% 0px"});
+  }
+  function observeReveals(){
+    $all("[data-reveal]:not(.in)").forEach(function(el){
+      if(io) io.observe(el); else el.classList.add("in");
+    });
+  }
+
+  /* ---------- scripted chat (demo) ---------- */
+  var chat = $("#chat"), log = $("#chatLog"), input = $("#chatInput");
+  var chatIntro = {
+    en:"This is a scripted demo assistant — it shows the UX pattern, not a live AI. Ask about any demo, timeline, pricing approach, or languages.",
+    de:"Dies ist ein Scripted-Demo-Assistent — er zeigt das UX-Muster, keine echte KI. Frag nach einer Demo, Zeitplan, Preislogik oder Sprachen."
+  };
+  function add(text, who){
+    var b = document.createElement("div");
+    b.className = "bubble " + (who || "bot");
+    b.textContent = text;
+    log.appendChild(b);
+    log.scrollTop = log.scrollHeight;
+  }
+  function openChat(topic){
+    chat.classList.add("open");
+    if(!log.childElementCount) add(chatIntro[currentLang] || chatIntro.en);
+    if(topic) route(topic);
+    setTimeout(function(){input.focus()},50);
+  }
+  $all("[data-open-chat]").forEach(function(b){b.addEventListener("click",function(){openChat()})});
+  $("#chatClose").addEventListener("click",function(){chat.classList.remove("open")});
+  document.addEventListener("click",function(e){
+    var t = e.target.closest("[data-chat-topic]");
+    if(t) openChat(t.getAttribute("data-chat-topic"));
+  });
+  function route(text){
+    var t = String(text).toLowerCase();
+    if(/nur|real|estate|immobil/.test(t)) return add("NUR shows premium art direction, luxury lead qualification, Golden Visa Q&A, and in-chat viewing requests.");
+    if(/dental|clinic|zahnarzt/.test(t)) return add("The dental demo shows German-first trust copy, appointment intent, insurance/hours answers, and gentle triage for nervous patients.");
+    if(/solar|pv|photovoltaik/.test(t)) return add("The solar demo shows qualification logic: roof type, ownership, usage, timeline, savings estimate, then consult booking.");
+    if(/saas|product/.test(t)) return add("The SaaS demo shows product explanation, feature Q&A, objection handling, and a clean book-a-demo path.");
+    if(/restaurant|dining|luma/.test(t)) return add("The restaurant demo shows hospitality tone, a reservation flow, dietary/menu Q&A, and private dining enquiries.");
+    if(/time|timeline|fast|long|schnell|dauer/.test(t)) return add("Typical timeline: first preview in 3-5 days, a landing page in about a week, landing + chatbot in one to two weeks depending on scope.");
+    if(/price|cost|budget|preis/.test(t)) return add("No public price list. A quote follows once scope, platform, chatbot backend, and automation needs are clear.");
+    if(/language|german|deutsch|english|englisch/.test(t)) return add("Delivery in English and German, especially for DACH niches. The dental and solar demos are German-first for that reason.");
+    if(/ai|llm|gpt|ki|bot/.test(t)) return add("This widget is scripted on purpose - it demonstrates the UX. On client projects the same flow connects to a real LLM backend with lead capture and webhooks.");
+    add("Try asking about a demo by name, the timeline, pricing approach, or languages.");
+  }
+  $("#chatForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    var v = input.value.trim();
+    if(!v) return;
+    add(v,"user");
+    input.value = "";
+    route(v);
+  });
+
+  /* ---------- lead form (demo) ---------- */
+  $("#leadForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    $("#formNote").textContent = currentLang === "de"
+      ? "Gesendet (Demo). Im Kundenprojekt landet das Briefing per Webhook in E-Mail, Telegram oder CRM."
+      : "Sent (demo). On a client project this brief lands in email, Telegram, or a CRM via webhook.";
+  });
+
+  renderCases();
+  observeReveals();
+})();
+</script>
+</body>
+</html>

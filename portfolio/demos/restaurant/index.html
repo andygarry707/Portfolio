@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en" id="top">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Luma Table — A warm room for evenings that matter</title>
+<meta name="description" content="Demo of a fine-dining restaurant page with a concierge assistant for reservations, menu questions, dietary notes, and private dining." />
+<meta name="robots" content="noindex" />
+<meta property="og:title" content="Luma Table — Restaurant Demo" />
+<meta property="og:description" content="A warm reservation page for evenings that matter. Portfolio demo by Andrey Volkov." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="og.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="og.jpg" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231E1013'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23C9A24B' stroke-width='1.4'/%3E%3Ctext x='16' y='20' font-size='9' fill='%23E4C88A' text-anchor='middle' font-family='Georgia,serif'%3EL%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --wine:#1E1013; --wine2:#2A171C; --wine3:#35202A; --brass:#C9A24B; --brass-soft:#E4C88A;
+  --blush:#F3E6D9; --muted:#B89AA0; --line:#43292F; --radius:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:82px}
+body{margin:0;background:var(--wine);color:var(--blush);font-family:Jost,Arial,sans-serif;line-height:1.65;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:3px}
+::selection{background:var(--brass);color:#2A1806}
+.skip{position:absolute;left:-999px;top:0;background:var(--brass);color:#2A1806;padding:10px 14px;z-index:100}
+.skip:focus{left:0}
+.wrap{width:min(1080px,calc(100% - 40px));margin:0 auto}
+.serif{font-family:"Cormorant Garamond",Georgia,serif}
+.eyebrow{font-family:Jost,sans-serif;text-transform:uppercase;letter-spacing:.34em;font-size:11px;color:var(--brass);font-weight:400}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:clamp(48px,7.6vw,104px);line-height:1.02;letter-spacing:.005em;margin:22px 0 20px;text-wrap:balance}
+h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:clamp(32px,4.6vw,54px);line-height:1.08;margin:0 0 16px;text-wrap:balance}
+h3{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:24px;margin:0 0 8px}
+p{color:var(--muted);margin:0 0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:14px 26px;border-radius:999px;border:1px solid var(--brass);background:var(--brass);color:#2A1806;font-family:Jost,sans-serif;font-weight:500;letter-spacing:.04em;font-size:14px;cursor:pointer;transition:transform .3s,box-shadow .3s,background .3s,color .3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 18px 34px -18px rgba(201,162,75,.5)}
+.btn.ghost{background:transparent;color:var(--blush);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--brass);color:var(--brass-soft)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;transition:background .45s,border-color .45s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(30,16,19,.86);backdrop-filter:blur(14px);border-bottom-color:var(--line)}
+.nav .wrap{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:25px;letter-spacing:.06em;display:flex;align-items:center;gap:10px}
+.brand .ring{width:30px;height:30px;border-radius:50%;border:1px solid var(--brass);display:grid;place-items:center;font-size:15px;color:var(--brass-soft)}
+.nav-right{display:flex;align-items:center;gap:18px}
+.nav-links{display:flex;gap:22px;font-size:13px;letter-spacing:.04em;color:var(--muted)}
+.nav-links a:hover{color:var(--brass-soft)}
+.back{font-family:Jost,sans-serif;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.16em}
+.back:hover{color:var(--brass)}
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.09s}.reveal[data-d="2"]{transition-delay:.18s}.reveal[data-d="3"]{transition-delay:.27s}
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;text-align:center;overflow:hidden;padding:120px 0 90px}
+.hero-art{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .inner{position:relative;max-width:760px;margin:0 auto}
+.hero .lead{max-width:46ch;margin:0 auto 32px;font-size:18px}
+.hero .actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.hero .flourish{display:flex;align-items:center;justify-content:center;gap:14px;margin:34px 0 0;color:var(--brass);font-size:12px;letter-spacing:.28em;text-transform:uppercase}
+.hero .flourish:before,.hero .flourish:after{content:"";width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--brass))}
+.hero .flourish:after{transform:scaleX(-1)}
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(243,230,217,.4)}
+/* detail band */
+.band{border-block:1px solid var(--line);background:var(--wine2)}
+.band .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.band .cell{padding:30px 18px;text-align:center;border-left:1px solid var(--line);min-width:0}
+.band .cell:first-child{border-left:0}
+.band .cell strong{display:block;font-family:"Cormorant Garamond",serif;font-weight:500;font-size:30px;color:var(--brass-soft)}
+.band .cell span{font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted)}
+.section{padding:96px 0}
+.sec-head{text-align:center;max-width:60ch;margin:0 auto 48px}
+/* signature dishes */
+.dishes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.dish-card{background:var(--wine2);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .5s,box-shadow .5s}
+.dish-card:hover{transform:translateY(-6px);border-color:rgba(201,162,75,.45);box-shadow:0 26px 50px -28px rgba(0,0,0,.8)}
+.dish-plate{aspect-ratio:4/3;position:relative;overflow:hidden}
+.dish-plate svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.dish-card:hover .dish-plate svg{transform:scale(1.05)}
+.dish-body{padding:22px 24px 26px}
+.dish-body .course-tag{font-size:10px;text-transform:uppercase;letter-spacing:.24em;color:var(--brass)}
+.dish-body h3{margin-top:8px}
+.dish-body p{font-size:14px;margin:0}
+/* menu */
+.menu-wrap{background:var(--wine2);border:1px solid var(--line);border-radius:16px;padding:52px clamp(24px,4vw,60px);position:relative;overflow:hidden}
+.menu-wrap:before{content:"";position:absolute;inset:14px;border:1px solid rgba(201,162,75,.18);border-radius:10px;pointer-events:none}
+.menu-head{text-align:center;margin-bottom:40px;position:relative}
+.menu-head .price-note{font-size:13px;color:var(--brass);letter-spacing:.18em;text-transform:uppercase;margin-top:6px}
+.courses{display:grid;grid-template-columns:1fr 1fr;gap:40px 56px;position:relative}
+.course h4{font-family:Jost,sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:.22em;font-size:11px;color:var(--brass);margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.m-item{margin-bottom:18px}
+.dish{display:flex;align-items:baseline;gap:10px;margin:0}
+.dish .d-name{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--blush);flex:none;max-width:78%}
+.dish .leader{flex:1;border-bottom:1px dotted var(--line)}
+.dish .d-price{font-family:"Cormorant Garamond",serif;font-size:21px;color:var(--brass-soft);flex:none}
+.d-desc{font-family:Jost,sans-serif;font-size:13px;color:var(--muted);margin-top:3px;letter-spacing:.02em}
+/* evening timeline */
+.evening{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ev{padding:34px 26px;background:var(--wine2);border-left:1px solid var(--line)}
+.ev:first-child{border-left:0}
+.ev .t{font-family:"Cormorant Garamond",serif;font-size:30px;color:var(--brass-soft)}
+.ev h3{font-size:20px;margin:10px 0 6px}
+.ev p{font-size:13.5px;margin:0}
+/* room */
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.room-plate{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;aspect-ratio:4/3.4;background:var(--wine2)}
+.room-plate svg{position:absolute;inset:0;width:100%;height:100%}
+.hospitality{display:grid;gap:2px}
+.hos{display:flex;gap:20px;padding:22px 0;border-top:1px solid var(--line)}
+.hos:last-child{border-bottom:1px solid var(--line)}
+.hos .n{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--brass);flex:none;width:44px}
+.hos p{margin:6px 0 0}
+/* voices */
+.voices{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.voice{background:var(--wine2);border:1px solid var(--line);border-radius:14px;padding:30px 28px;display:flex;flex-direction:column;gap:16px}
+.voice .q{font-family:"Cormorant Garamond",serif;font-size:21px;line-height:1.4;color:var(--blush);font-style:italic}
+.voice .who{font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:var(--brass)}
+.stars{color:var(--brass);letter-spacing:.2em;font-size:13px}
+/* reserve */
+.reserve{background:var(--wine2);border-block:1px solid var(--line)}
+.reserve .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.form{display:grid;gap:15px}
+.form label{font-family:Jost,sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}
+.field{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:8px;background:var(--wine);color:var(--blush)}
+.field::placeholder{color:#8A6B72}
+.field:focus{outline:none;border-color:var(--brass)}
+.note{font-size:13px;color:var(--muted);margin:0}
+.hours{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:26px}
+.hrow{display:flex;justify-content:space-between;gap:16px;padding:14px 18px;background:var(--wine);border-top:1px solid var(--line);font-size:14px}
+.hrow:first-child{border-top:0}
+.hrow .d{color:var(--muted)}
+.hrow .h{color:var(--brass-soft)}
+.foot{border-top:1px solid var(--line);padding:38px 0;color:var(--muted);font-size:13px;letter-spacing:.02em}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px}
+/* chat */
+#chatBtn{position:fixed;right:20px;bottom:20px;z-index:60;display:flex;align-items:center;gap:10px;height:54px;padding:0 22px 0 16px;border:0;border-radius:999px;background:var(--brass);color:#2A1806;font-family:Jost,sans-serif;font-weight:500;letter-spacing:.03em;cursor:pointer;box-shadow:0 18px 40px -18px rgba(201,162,75,.55);transition:transform .3s}
+#chatBtn:hover{transform:translateY(-2px)}
+#chatBtn .av{width:28px;height:28px;border-radius:50%;background:#2A1806;color:var(--brass-soft);display:grid;place-items:center;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:15px}
+#chat{position:fixed;right:20px;bottom:86px;z-index:61;width:min(384px,calc(100vw - 30px));max-height:min(620px,calc(100dvh - 120px));display:none;flex-direction:column;background:var(--wine2);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 40px 90px -40px #000}
+#chat.open{display:flex}
+.chat-head{display:flex;align-items:center;gap:12px;padding:15px 16px;background:var(--wine3);border-bottom:1px solid var(--line)}
+.chat-head .av{width:40px;height:40px;border-radius:50%;background:var(--brass);color:#2A1806;display:grid;place-items:center;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:18px}
+.chat-head .t{font-family:"Cormorant Garamond",serif;font-size:18px;line-height:1.1}
+.chat-head .s{font-family:Jost,sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.16em;color:var(--brass)}
+.chat-head .x{margin-left:auto;width:36px;height:36px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:8px}
+.chat-demo-note{font-size:10.5px;letter-spacing:.04em;color:var(--muted);background:var(--wine);border-bottom:1px solid var(--line);padding:7px 14px;text-align:center}
+.chat-log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:86%;padding:11px 14px;border-radius:14px;font-size:14px;line-height:1.55;white-space:pre-line}
+.bot{align-self:flex-start;background:var(--wine3);border:1px solid var(--line);border-bottom-left-radius:4px}
+.user{align-self:flex-end;background:var(--brass);color:#2A1806;border-bottom-right-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
+.chip{font-family:Jost,sans-serif;font-size:11px;letter-spacing:.04em;padding:8px 12px;border:1px solid var(--line);color:var(--brass-soft);background:transparent;border-radius:999px;cursor:pointer}
+.chip:hover{border-color:var(--brass);background:var(--wine3)}
+.chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.chat-foot input{flex:1;border:1px solid var(--line);border-radius:999px;padding:11px 15px;background:var(--wine);color:var(--blush)}
+.chat-foot input:focus{outline:none;border-color:var(--brass)}
+.chat-foot button{width:44px;height:44px;flex:none;border:0;border-radius:50%;background:var(--brass);color:#2A1806;cursor:pointer}
+@media(max-width:940px){
+  .dishes,.voices{grid-template-columns:1fr 1fr}
+  .evening{grid-template-columns:1fr 1fr}
+  .ev{border-top:1px solid var(--line)}
+  .ev:nth-child(1),.ev:nth-child(2){border-top:0}
+  .ev:nth-child(3){border-left:0}
+}
+@media(max-width:820px){
+  .courses,.split,.reserve .wrap{grid-template-columns:1fr;gap:34px}
+  .nav-links{display:none}
+  .band .wrap{grid-template-columns:1fr 1fr}
+  .band .cell:nth-child(3){border-left:0}
+  .band .cell{border-top:1px solid var(--line)}
+  .band .cell:nth-child(1),.band .cell:nth-child(2){border-top:0}
+  .dish .d-name{max-width:70%}
+}
+@media(max-width:620px){
+  .dishes,.voices,.evening{grid-template-columns:1fr}
+  .ev{border-left:0;border-top:1px solid var(--line)}
+  .ev:first-child{border-top:0}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .reveal{opacity:1!important;transform:none!important}
+}
+</style>
+<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#reserve">Skip to the reservation form</a>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="ring" aria-hidden="true">L</span>Luma Table</a>
+    <div class="nav-right">
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#signature">Dishes</a>
+        <a href="#menu">Menu</a>
+        <a href="#room">Room</a>
+        <a href="#evening">Evening</a>
+      </nav>
+      <a class="back" href="../../brand-site/index.html">← Portfolio</a>
+      <a class="btn" href="#reserve" style="min-height:42px;padding:10px 18px">Reserve</a>
+    </div>
+  </div>
+</header>
+
+<main id="content">
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="hero-art" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="glow" cx=".5" cy=".42" r=".55">
+          <stop offset="0" stop-color="#C9A24B" stop-opacity=".22"/>
+          <stop offset=".5" stop-color="#C9A24B" stop-opacity=".07"/>
+          <stop offset="1" stop-color="#C9A24B" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1E1013" stop-opacity="0"/>
+          <stop offset="1" stop-color="#150A0D"/>
+        </linearGradient>
+        <radialGradient id="candle" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#E4C88A" stop-opacity=".85"/>
+          <stop offset=".4" stop-color="#C9A24B" stop-opacity=".3"/>
+          <stop offset="1" stop-color="#C9A24B" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1440" height="800" fill="#1E1013"/>
+      <ellipse cx="720" cy="330" rx="640" ry="380" fill="url(#glow)"/>
+      <!-- arch windows left -->
+      <g stroke="#43292F" stroke-width="1.6" fill="none" opacity=".8">
+        <path d="M90 620 V330 a85 85 0 0 1 170 0 V620 Z"/>
+        <path d="M175 245 V620 M90 400 H260 M90 490 H260"/>
+      </g>
+      <g stroke="#43292F" stroke-width="1.6" fill="none" opacity=".5">
+        <path d="M310 620 V370 a62 62 0 0 1 124 0 V620 Z"/>
+        <path d="M372 308 V620 M310 440 H434 M310 520 H434"/>
+      </g>
+      <!-- arch windows right -->
+      <g stroke="#43292F" stroke-width="1.6" fill="none" opacity=".8">
+        <path d="M1180 620 V330 a85 85 0 0 1 170 0 V620 Z"/>
+        <path d="M1265 245 V620 M1180 400 H1350 M1180 490 H1350"/>
+      </g>
+      <g stroke="#43292F" stroke-width="1.6" fill="none" opacity=".5">
+        <path d="M1006 620 V370 a62 62 0 0 1 124 0 V620 Z"/>
+        <path d="M1068 308 V620 M1006 440 H1130 M1006 520 H1130"/>
+      </g>
+      <!-- distant candle lights -->
+      <g>
+        <circle cx="176" cy="560" r="60" fill="url(#candle)" opacity=".45"/>
+        <circle cx="1264" cy="560" r="60" fill="url(#candle)" opacity=".45"/>
+        <circle cx="372" cy="585" r="38" fill="url(#candle)" opacity=".3"/>
+        <circle cx="1068" cy="585" r="38" fill="url(#candle)" opacity=".3"/>
+      </g>
+      <rect y="560" width="1440" height="240" fill="url(#floor)"/>
+    </svg>
+    <div class="wrap" style="position:relative">
+      <p class="eyebrow reveal in">Fine dining · Demo</p>
+      <div class="inner">
+        <h1 class="serif reveal in" data-d="1">A table worth dressing&nbsp;for.</h1>
+      </div>
+      <p class="lead reveal in" data-d="2">A warm hospitality page for evenings that matter — with a concierge who takes reservations, answers the menu, notes allergies, and arranges private dining.</p>
+      <div class="actions reveal in" data-d="3">
+        <a class="btn" href="#reserve">Reserve a table</a>
+        <button class="btn ghost" type="button" data-open-chat>Ask the concierge</button>
+      </div>
+      <div class="flourish reveal in" data-d="3">Dinner · Wed–Sun · from 6pm</div>
+    </div>
+    <div class="scroll-cue">Scroll</div>
+  </section>
+
+  <!-- DETAIL BAND -->
+  <section class="band" aria-label="At a glance">
+    <div class="wrap">
+      <div class="cell reveal"><strong>Est. 2019</strong><span>Old town, corner room</span></div>
+      <div class="cell reveal" data-d="1"><strong>34 seats</strong><span>One seating a night</span></div>
+      <div class="cell reveal" data-d="2"><strong>4 courses</strong><span>Menu changes weekly</span></div>
+      <div class="cell reveal" data-d="3"><strong>120 wines</strong><span>Low-intervention cellar</span></div>
+    </div>
+  </section>
+
+  <!-- SIGNATURE DISHES -->
+  <section class="section" id="signature">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">This season</p>
+        <h2 class="serif">Three plates the room talks about.</h2>
+      </div>
+      <div class="dishes">
+        <article class="dish-card reveal">
+          <div class="dish-plate">
+            <svg viewBox="0 0 400 300" aria-hidden="true">
+              <rect width="400" height="300" fill="#2A171C"/>
+              <circle cx="200" cy="150" r="104" fill="#241318" stroke="#43292F" stroke-width="1.5"/>
+              <circle cx="200" cy="150" r="84" fill="none" stroke="#C9A24B" stroke-width=".8" opacity=".5"/>
+              <g stroke="#C9A24B" stroke-width="1.6" fill="none" opacity=".9">
+                <path d="M158 168 C168 128 186 122 200 118 C214 122 232 128 242 168"/>
+                <path d="M166 168 H234 M172 176 H228"/>
+                <path d="M186 106 q6 -12 14 0 q6 -12 14 0" opacity=".6"/>
+              </g>
+              <circle cx="152" cy="192" r="4" fill="#C9A24B" opacity=".55"/>
+              <circle cx="250" cy="188" r="3" fill="#E4C88A" opacity=".5"/>
+            </svg>
+          </div>
+          <div class="dish-body">
+            <span class="course-tag">To begin</span>
+            <h3>Charred leek</h3>
+            <p>Hazelnut, brown butter and aged parmesan — the opener that never leaves the menu for long.</p>
+          </div>
+        </article>
+        <article class="dish-card reveal" data-d="1">
+          <div class="dish-plate">
+            <svg viewBox="0 0 400 300" aria-hidden="true">
+              <rect width="400" height="300" fill="#2A171C"/>
+              <circle cx="200" cy="150" r="104" fill="#241318" stroke="#43292F" stroke-width="1.5"/>
+              <circle cx="200" cy="150" r="84" fill="none" stroke="#C9A24B" stroke-width=".8" opacity=".5"/>
+              <g stroke="#C9A24B" stroke-width="1.6" fill="none" opacity=".9">
+                <path d="M136 150 C160 128 240 128 264 150 C240 172 160 172 136 150 Z"/>
+                <path d="M150 150 H250 M164 141 q10 6 0 12 M198 138 q10 6 0 12 M232 141 q8 5 0 10" opacity=".7"/>
+                <path d="M264 150 l18 -10 v20 z" opacity=".8"/>
+              </g>
+              <circle cx="146" cy="196" r="3.5" fill="#E4C88A" opacity=".5"/>
+              <circle cx="256" cy="192" r="4" fill="#C9A24B" opacity=".5"/>
+            </svg>
+          </div>
+          <div class="dish-body">
+            <span class="course-tag">Main</span>
+            <h3>Line-caught sea bass</h3>
+            <p>Fennel, saffron broth and mussels. Finished at the table, when the room allows it.</p>
+          </div>
+        </article>
+        <article class="dish-card reveal" data-d="2">
+          <div class="dish-plate">
+            <svg viewBox="0 0 400 300" aria-hidden="true">
+              <rect width="400" height="300" fill="#2A171C"/>
+              <circle cx="200" cy="150" r="104" fill="#241318" stroke="#43292F" stroke-width="1.5"/>
+              <circle cx="200" cy="150" r="84" fill="none" stroke="#C9A24B" stroke-width=".8" opacity=".5"/>
+              <g stroke="#C9A24B" stroke-width="1.6" fill="none" opacity=".9">
+                <path d="M158 176 A42 42 0 0 1 242 176 Z"/>
+                <path d="M172 176 A28 28 0 0 1 228 176" opacity=".6"/>
+                <circle cx="200" cy="120" r="8"/>
+                <path d="M200 112 q4 -10 12 -8" opacity=".7"/>
+              </g>
+              <circle cx="154" cy="196" r="3.5" fill="#E4C88A" opacity=".5"/>
+              <circle cx="248" cy="194" r="3" fill="#C9A24B" opacity=".55"/>
+            </svg>
+          </div>
+          <div class="dish-body">
+            <span class="course-tag">To finish</span>
+            <h3>Citrus tart</h3>
+            <p>Thyme and cr��me fraîche. Ordered by tables who claimed they were done eating.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="section" id="menu" style="padding-top:0">
+    <div class="wrap">
+      <div class="menu-wrap reveal">
+        <div class="menu-head">
+          <p class="eyebrow">The menu</p>
+          <h2 class="serif" style="margin-top:12px">The autumn menu</h2>
+          <div class="price-note">Four courses · 68 · wine pairing 42</div>
+        </div>
+        <div class="courses">
+          <div class="course">
+            <h4>To begin</h4>
+            <div class="m-item"><div class="dish"><span class="d-name">Charred leek</span><span class="leader" aria-hidden="true"></span><span class="d-price">18</span></div><div class="d-desc">hazelnut, brown butter, aged parmesan</div></div>
+            <div class="m-item"><div class="dish"><span class="d-name">Oyster &amp; apple</span><span class="leader" aria-hidden="true"></span><span class="d-price">16</span></div><div class="d-desc">green mignonette, dill oil</div></div>
+          </div>
+          <div class="course">
+            <h4>Mains</h4>
+            <div class="m-item"><div class="dish"><span class="d-name">Line-caught sea bass</span><span class="leader" aria-hidden="true"></span><span class="d-price">34</span></div><div class="d-desc">fennel, saffron broth, mussels</div></div>
+            <div class="m-item"><div class="dish"><span class="d-name">Dry-aged ribeye</span><span class="leader" aria-hidden="true"></span><span class="d-price">46</span></div><div class="d-desc">smoked marrow, winter greens</div></div>
+          </div>
+          <div class="course">
+            <h4>To finish</h4>
+            <div class="m-item"><div class="dish"><span class="d-name">Citrus tart</span><span class="leader" aria-hidden="true"></span><span class="d-price">14</span></div><div class="d-desc">thyme, crème fraîche</div></div>
+            <div class="m-item"><div class="dish"><span class="d-name">Dark chocolate</span><span class="leader" aria-hidden="true"></span><span class="d-price">13</span></div><div class="d-desc">olive oil, Maldon salt</div></div>
+          </div>
+          <div class="course">
+            <h4>From the cellar</h4>
+            <div class="m-item"><div class="dish"><span class="d-name">Pét-nat, by the glass</span><span class="leader" aria-hidden="true"></span><span class="d-price">14</span></div><div class="d-desc">Loire, low intervention</div></div>
+            <div class="m-item"><div class="dish"><span class="d-name">Barolo</span><span class="leader" aria-hidden="true"></span><span class="d-price">22</span></div><div class="d-desc">Piedmont, 2016</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROOM -->
+  <section class="section" id="room" style="padding-top:0">
+    <div class="wrap split">
+      <div class="room-plate reveal" aria-hidden="true">
+        <svg viewBox="0 0 440 380">
+          <rect width="440" height="380" fill="#241318"/>
+          <radialGradient id="rg" cx=".5" cy=".38" r=".6">
+            <stop offset="0" stop-color="#C9A24B" stop-opacity=".2"/>
+            <stop offset="1" stop-color="#C9A24B" stop-opacity="0"/>
+          </radialGradient>
+          <rect width="440" height="380" fill="url(#rg)"/>
+          <g stroke="#43292F" stroke-width="1.6" fill="none">
+            <path d="M60 300 V150 a60 60 0 0 1 120 0 V300"/>
+            <path d="M120 92 V300 M60 200 H180 M60 252 H180"/>
+            <path d="M260 300 V150 a60 60 0 0 1 120 0 V300"/>
+            <path d="M320 92 V300 M260 200 H380 M260 252 H380"/>
+          </g>
+          <!-- table -->
+          <g stroke="#C9A24B" stroke-width="1.6" fill="none" opacity=".95">
+            <ellipse cx="220" cy="316" rx="88" ry="14"/>
+            <path d="M150 320 V352 M290 320 V352"/>
+            <!-- candlestick -->
+            <path d="M220 312 V282 M212 282 H228 M216 302 H224"/>
+          </g>
+          <circle cx="220" cy="272" r="26" fill="url(#rg)"/>
+          <circle cx="220" cy="276" r="3.4" fill="#E4C88A"/>
+          <!-- glasses -->
+          <g stroke="#C9A24B" stroke-width="1.3" fill="none" opacity=".8">
+            <path d="M176 306 v-16 m-7 -12 a7 12 0 0 0 14 0 v-2 h-14 z M169 306 h14"/>
+            <path d="M264 306 v-16 m-7 -12 a7 12 0 0 0 14 0 v-2 h-14 z M257 306 h14"/>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <p class="eyebrow reveal">The room</p>
+        <h2 class="serif reveal" data-d="1">Enough atmosphere to desire, enough clarity to book.</h2>
+        <p class="reveal" data-d="2">A restaurant page should make the next step obvious without turning into a PDF menu. The concierge fills the gaps — quietly, the way a good host would.</p>
+        <div class="hospitality reveal" data-d="2">
+          <div class="hos"><span class="n serif">i</span><div><h3>Reservations</h3><p>Date, party size, time preference and contact — collected in a sentence or two, not a form marathon.</p></div></div>
+          <div class="hos"><span class="n serif">ii</span><div><h3>Dietary notes</h3><p>Common allergies answered with confidence; anything uncertain is passed to the kitchen, never guessed.</p></div></div>
+          <div class="hos"><span class="n serif">iii</span><div><h3>Private dining</h3><p>Occasion, guest count, date and budget captured for the events team to follow up personally.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENING TIMELINE -->
+  <section class="section" id="evening" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">An evening at Luma</p>
+        <h2 class="serif">The shape of the night.</h2>
+      </div>
+      <div class="evening reveal" data-d="1">
+        <div class="ev"><div class="t serif">6:00</div><h3 class="serif">Aperitivo</h3><p>The room opens. A glass of pét-nat while the kitchen finds its rhythm.</p></div>
+        <div class="ev"><div class="t serif">6:45</div><h3 class="serif">First plates</h3><p>Courses arrive unhurried — the menu is a pace, not a list.</p></div>
+        <div class="ev"><div class="t serif">8:30</div><h3 class="serif">The cellar</h3><p>The sommelier walks the room. Pairings adjust to the table, not the chart.</p></div>
+        <div class="ev"><div class="t serif">10:00</div><h3 class="serif">Digestivo</h3><p>Lights lower. Nobody is asked to leave; the last table sets the closing time.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICES -->
+  <section class="section" style="padding-top:0" aria-label="Guest words">
+    <div class="wrap">
+      <div class="voices">
+        <figure class="voice reveal" style="margin:0">
+          <div class="stars" aria-label="Five stars">★★★★★</div>
+          <blockquote class="q" style="margin:0">“Booked over chat in under a minute — allergies noted, window table held. That never happens.”</blockquote>
+          <figcaption class="who">Anniversary dinner · Party of 2</figcaption>
+        </figure>
+        <figure class="voice reveal" data-d="1" style="margin:0">
+          <div class="stars" aria-label="Five stars">★★★★★</div>
+          <blockquote class="q" style="margin:0">“The kind of room where the evening slows down. The sea bass is worth the trip alone.”</blockquote>
+          <figcaption class="who">Regular · Since 2021</figcaption>
+        </figure>
+        <figure class="voice reveal" data-d="2" style="margin:0">
+          <div class="stars" aria-label="Five stars">★★★★★</div>
+          <blockquote class="q" style="margin:0">“Planned a 14-person private dinner without a single phone call. The events team had every detail.”</blockquote>
+          <figcaption class="who">Private dining · Corporate</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVE -->
+  <section class="section reserve" id="reserve">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow reveal">Reserve</p>
+        <h2 class="serif reveal" data-d="1">Reserve your table.</h2>
+        <p class="reveal" data-d="2">Local demo form, nothing is sent. In production it connects to your booking system, email, or CRM — and the concierge can complete it in chat.</p>
+        <div class="hours reveal" data-d="2" aria-label="Opening hours">
+          <div class="hrow"><span class="d">Wednesday — Friday</span><span class="h serif">6pm – late</span></div>
+          <div class="hrow"><span class="d">Saturday — Sunday</span><span class="h serif">5:30pm – late</span></div>
+          <div class="hrow"><span class="d">Monday — Tuesday</span><span class="h serif">Closed</span></div>
+        </div>
+      </div>
+      <form class="form reveal" data-d="1" id="lead">
+        <div>
+          <label for="l-name">Name</label>
+          <input class="field" id="l-name" required placeholder="Your name" />
+        </div>
+        <div>
+          <label for="l-contact">Email or phone</label>
+          <input class="field" id="l-contact" required placeholder="So the host can confirm" />
+        </div>
+        <div>
+          <label for="l-when">Date, time &amp; party size</label>
+          <input class="field" id="l-when" placeholder="e.g. Sat, 8pm, 2 guests" />
+        </div>
+        <button class="btn" type="submit">Request reservation</button>
+        <p class="note" id="lead-note" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>Luma Table — fictional demo restaurant · design &amp; build by Andrey Volkov</span>
+    <a class="back" href="../../brand-site/index.html">← Back to portfolio</a>
+  </div>
+</footer>
+
+<button id="chatBtn" type="button" aria-label="Open the Luma concierge" data-open-chat>
+  <span class="av" aria-hidden="true">L</span> Concierge
+</button>
+<section id="chat" role="dialog" aria-label="Luma concierge" aria-modal="false">
+  <div class="chat-head">
+    <span class="av" aria-hidden="true">L</span>
+    <div>
+      <div class="t">Luma Concierge</div>
+      <div class="s">Reservations · Demo</div>
+    </div>
+    <button class="x" id="chatClose" type="button" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-demo-note">Scripted demo — no live AI. Client versions connect to a real LLM.</div>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <form class="chat-foot" id="chatForm">
+    <input id="chatInput" autocomplete="off" placeholder="Reservations, menu, dietary, private dining…" aria-label="Message" />
+    <button type="submit" aria-label="Send">→</button>
+  </form>
+</section>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* nav solid on scroll */
+  var nav = document.getElementById("nav");
+  function onScroll(){ nav.classList.toggle("solid", scrollY > 40); }
+  addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  /* reveal on scroll */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll(".reveal:not(.in)").forEach(function(el){ io.observe(el); });
+
+  var chat = document.getElementById("chat"),
+      log = document.getElementById("chatLog"),
+      input = document.getElementById("chatInput");
+  var greeted = false;
+
+  function scrollDown(){ log.scrollTop = log.scrollHeight; }
+  function push(text, who){
+    var b = document.createElement("div");
+    b.className = "bubble " + (who || "bot");
+    b.textContent = text; log.appendChild(b); scrollDown();
+  }
+  function chips(items){
+    if(!items || !items.length) return;
+    var row = document.createElement("div"); row.className = "chips";
+    items.forEach(function(c){
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "chip"; btn.textContent = c;
+      btn.addEventListener("click", function(){ row.remove(); userSay(c); });
+      row.appendChild(btn);
+    });
+    log.appendChild(row); scrollDown();
+  }
+  function botSay(text, items){
+    var t = document.createElement("div"); t.className = "bubble bot"; t.textContent = "…";
+    log.appendChild(t); scrollDown();
+    setTimeout(function(){ t.remove(); push(text,"bot"); chips(items); }, reduce ? 160 : 560);
+  }
+  function openChat(){
+    chat.classList.add("open");
+    if(!greeted){
+      greeted = true;
+      botSay("Good evening, and welcome to Luma. A quick note: I'm a scripted demo assistant — client projects connect to a real AI. I can arrange a reservation, talk you through the menu, note dietary needs, or plan a private dining evening. How may I help?",
+        ["Reserve a table","The menu","Dietary notes","Private dining"]);
+    }
+    setTimeout(function(){ input.focus(); }, 60);
+  }
+  function closeChat(){ chat.classList.remove("open"); }
+  function userSay(text){ text=(text||"").trim(); if(!text) return; push(text,"user"); route(text); }
+
+  function route(text){
+    var t = text.toLowerCase();
+    if(/reserve|table|book|tonight|tomorrow|date|time|party|seat|available/.test(t))
+      return botSay("With pleasure. What date, preferred time, and party size — and a name and number for the host? I'll hold it the moment the details are in.",
+        ["Dietary notes","Private dining"]);
+    if(/allerg|vegan|vegetarian|gluten|diet|nut|dairy|halal|intoleran/.test(t))
+      return botSay("We handle most dietary needs with a little notice. For severe allergies the kitchen confirms directly rather than the assistant — I'd note it on your booking so the team is ready.",
+        ["Reserve a table","The menu"]);
+    if(/private|event|birthday|anniversary|group|celebrat|corporate|buyout/.test(t))
+      return botSay("For private dining I'd gather the occasion, guest count, preferred date, and a rough budget, then the events team follows up personally. Shall I start with the date and headcount?",
+        ["Reserve a table"]);
+    if(/menu|dish|wine|pairing|course|eat|food|vegetarian option|chef/.test(t))
+      return botSay("The autumn menu is four courses at 68, with an optional wine pairing at 42. Highlights: charred leek to begin, line-caught sea bass or dry-aged ribeye, and a citrus tart to finish. Would you like a vegetarian route or the pairing?",
+        ["Reserve a table","Dietary notes"]);
+    if(/hours|open|when|close|parking|where|address|location/.test(t))
+      return botSay("Dinner is Wednesday to Sunday from 6pm (demo hours). In production the real hours, address, and parking notes would live here and in the booking confirmation.",
+        ["Reserve a table"]);
+    if(/hi|hello|hey|good (evening|afternoon|morning)|greetings/.test(t))
+      return botSay("Hello, and welcome. Are you looking to reserve, curious about the menu, or planning something private?",
+        ["Reserve a table","The menu","Private dining"]);
+    return botSay("I can help with reservations, the menu, dietary notes, or private dining. Which would you like — or leave a name and time and I'll pass it to the host?",
+      ["Reserve a table","The menu","Private dining"]);
+  }
+
+  document.querySelectorAll("[data-open-chat]").forEach(function(b){ b.addEventListener("click", function(){ openChat(); }); });
+  document.getElementById("chatClose").addEventListener("click", closeChat);
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape" && chat.classList.contains("open")) closeChat(); });
+  document.getElementById("chatForm").addEventListener("submit", function(e){
+    e.preventDefault(); var v = input.value; input.value = ""; userSay(v);
+  });
+  document.getElementById("lead").addEventListener("submit", function(e){
+    e.preventDefault();
+    document.getElementById("lead-note").textContent = "Thank you — noted locally in this demo. In production the host confirms by email or phone.";
+    this.reset();
+  });
+})();
+</script>
+</body>
+</html>
